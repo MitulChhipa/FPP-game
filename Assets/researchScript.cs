@@ -25,7 +25,6 @@ public class researchScript : MonoBehaviour
 
         if (informationValue != _targetInformationValue)
         {
-            print("updating");
             informationValue += Time.deltaTime;
             UpdateLoadingBar();
         }

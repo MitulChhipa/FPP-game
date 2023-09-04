@@ -23,7 +23,7 @@ MonoBehaviour:
   increaseKnowledgeValue: 0
   currentAmmo: 20
   maxAmmo: 20
-  totalAmmo: 96
+  totalAmmo: 150
   fireTime: 0.5
   fireRange: 100
   damage: 20

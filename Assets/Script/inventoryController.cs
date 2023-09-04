@@ -56,7 +56,6 @@ public class inventoryController : MonoBehaviour
                     Destroy(_hit.collider.gameObject);
                     break;
                 case "Computer":
-                    print("true");
                     researchScript _researchScript = _hit.collider.gameObject.GetComponent<researchScript>();
                     UseCollectibles(ref _researchScript);
                     break;
