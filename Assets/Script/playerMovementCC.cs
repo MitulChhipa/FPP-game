@@ -1,0 +1,163 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class playerMovementCC : MonoBehaviour
+{
+    [SerializeField] private CharacterController _controller;
+    [SerializeField] private float _rotationSpeed, _walkSpeed, _sprintSpeed, _swimSpeed;
+    [SerializeField] private PlayerHealth _ph;
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private float _gravitationalAcc;
+
+    private float _y, _playerSpeed;
+    private Vector3 _localDirection = new Vector3();
+    private Vector3 _inputDirection = new Vector3();
+    private Vector3 _gravity = new Vector3(0,0,0);
+    private bool _isWalking, _shift, _jump, _onGround, _isRunning, _actionInput, _crouch;
+    private float _timer;
+    private bool _isSwimming;
+
+
+    private void Start()
+    {
+        //_state = playerState.idle;
+        _controller = GetComponent<CharacterController>();
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void Update()
+    {
+        inputStates();
+        movement();
+        jump();
+        _timer = _timer + Time.deltaTime;
+        if(_timer >=1)
+        {
+            timeFunction();
+            _timer= 0;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        cameraRotation();
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.collider.CompareTag("Water"))
+        {
+            _isSwimming = true;
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                _ph.changeWater(100);
+            }
+        }
+        else
+        {
+            _isSwimming = false;
+        }
+    }
+
+    private void movement()
+    {
+        _localDirection = transform.TransformDirection(_inputDirection);
+        _localDirection.Normalize();
+        _controller.Move((_localDirection * _playerSpeed + _gravity) * Time.deltaTime);
+        
+    }
+
+    private void inputStates()
+    {
+        _y = Input.GetAxis("Mouse X");
+        _crouch = Input.GetKey(KeyCode.C);
+        _actionInput = Input.GetKey(KeyCode.E);
+       
+        _inputDirection.x = Input.GetAxis("Horizontal");
+        _inputDirection.z = Input.GetAxis("Vertical");
+
+
+        _isWalking = _inputDirection.x != 0 || _inputDirection.z != 0;
+        _jump = Input.GetKeyDown(KeyCode.Space);
+        _shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
+
+        if(_isSwimming)
+        {
+            _playerSpeed = _swimSpeed;
+        }
+        else
+        {
+            if (_shift && _ph.canRun)
+            {
+                _playerSpeed = _sprintSpeed;
+                _isRunning = true;
+            }
+            else
+            {
+                _playerSpeed = _walkSpeed;
+                _isRunning = false;
+            }
+        }
+    }
+
+    private void cameraRotation()
+    {
+        transform.Rotate(0, _y * Time.deltaTime * _rotationSpeed, 0);
+        
+    }
+
+    private void jump()
+    {
+        if (_isSwimming) return;
+        if(_controller.isGrounded)
+        {
+            if (_gravity.y < -15f)
+            {
+                _ph.changeHealth(_gravity.y);
+            }
+            _gravity.y = -1f;
+            if (_jump)
+            {
+                _gravity.y = _jumpForce;
+            }
+        }
+        else
+        {
+            _gravity.y = _gravity.y + (_gravitationalAcc * Time.deltaTime);
+        }
+    }
+
+    private void timeFunction()
+    {
+        if (_isRunning && _ph.stamina > 0)
+        {
+            _ph.changeStamina(-10);
+        }
+        else if(!_isWalking && !_shift && !_isRunning && _ph.stamina < 100)
+        {
+            _ph.changeStamina(20);
+        }
+
+        if (_ph.water <= 0 || _ph.food <= 0)
+        {
+            _ph.changeHealth(-5);
+        }
+        else
+        {
+            _ph.changeWater(-0.1f);
+            _ph.changeFood(-0.1f);
+        }
+
+        if ( _ph.stamina > 0)
+        {
+            _ph.canRun = true;
+        }
+        else
+        {
+            _ph.canRun = false;
+        }
+    }
+}

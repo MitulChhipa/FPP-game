@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf697ead3918f204da282bb2297b35b8, type: 3}
+  m_Name: Pistol
+  m_EditorClassIdentifier: 
+  type: 1
+  image: {fileID: 21300000, guid: d68b33aeb08f63f41ae6e1b6c4b2b157, type: 3}
+  description: 
+  itemName: Pistol
+  restoreHealth: 0
+  restoreFood: 0
+  restoreStamina: 0
+  restoreWater: 0
+  increaseKnowledgeValue: 0
+  currentAmmo: 20
+  maxAmmo: 20
+  totalAmmo: 96
+  fireTime: 0.5
+  fireRange: 100
+  damage: 20
+  reloadTime: 2
