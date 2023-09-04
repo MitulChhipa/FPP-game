@@ -23,7 +23,7 @@ public class weaponScript : MonoBehaviour
     
     public WeaponScriptable weaponScriptable;
 
-    private int _totalAmmo;
+    //private int _totalAmmo;
     private int _maxAmmo;
     private Ray _ray;
     private RaycastHit _hit;
@@ -38,16 +38,12 @@ public class weaponScript : MonoBehaviour
         SettingValues();
         //_magAmmo = _maxAmmo;
         UpdateAmmo();
-        _totalAmmoCount.text = _totalAmmo.ToString();
+        _totalAmmoCount.text = weaponScriptable.totalAmmo.ToString();
         
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Time.timeScale = 0f;
-        }
 
         if (Input.GetMouseButtonDown(0) && !_weaponManager.reloading)
         {
@@ -63,7 +59,7 @@ public class weaponScript : MonoBehaviour
             }
         }
         
-        if (Input.GetKeyDown(KeyCode.R) && !_weaponManager.reloading && (weaponScriptable.currentAmmo <_maxAmmo) && (_totalAmmo!=0))
+        if (Input.GetKeyDown(KeyCode.R) && !_weaponManager.reloading && (weaponScriptable.currentAmmo <_maxAmmo) && (weaponScriptable.totalAmmo != 0))
         {
             reload();
         }
@@ -146,7 +142,7 @@ public class weaponScript : MonoBehaviour
         _fireRange = weaponScriptable.fireRange; 
         _fireRate = weaponScriptable.fireTime;
         _damage = weaponScriptable.damage;
-        _totalAmmo = weaponScriptable.totalAmmo;
+        weaponScriptable.totalAmmo = weaponScriptable.totalAmmo;
     }
 
     public void UpdateAmmo()
@@ -175,7 +171,7 @@ public class weaponScript : MonoBehaviour
     }
     private void ShootingWeaponFire()
     {
-        if(_totalAmmo == 0 && weaponScriptable.currentAmmo == 0)
+        if(weaponScriptable.totalAmmo == 0 && weaponScriptable.currentAmmo == 0)
         {
             click.Play();
             return;
@@ -233,7 +229,7 @@ public class weaponScript : MonoBehaviour
                 _ammoCount.text = "∞";
                 break;
             case itemType.ShootingWeapon: 
-                _totalAmmoCount.text = _totalAmmo.ToString();
+                _totalAmmoCount.text = weaponScriptable.totalAmmo.ToString();
                 _ammoCount.text = weaponScriptable.currentAmmo.ToString();
                 break;
         }
