@@ -4,8 +4,8 @@
     "totalPistolAmmo": 96,
     "totalM4Ammo": 49,
     "health": 100.0,
-    "foodLevel": 99.60000610351563,
-    "waterLevel": 99.60000610351563,
+    "foodLevel": 99.80000305175781,
+    "waterLevel": 99.80000305175781,
     "researchDataValue": 0.0,
     "position": {
         "x": 654.760009765625,
@@ -14,22 +14,28 @@
     },
     "rotation": {
         "x": 0.0,
-        "y": 0.30441150069236758,
+        "y": 0.07549235969781876,
         "z": 0.0,
-        "w": 0.9525406360626221
+        "w": 0.9971464276313782
     },
     "slots": [
         {
             "item": {
-                "instanceID": 24088
+                "instanceID": 24090
             },
-            "amount": 1
+            "amount": 3
         },
         {
             "item": {
-                "instanceID": 24520
+                "instanceID": 24278
             },
-            "amount": 2
+            "amount": 5
+        },
+        {
+            "item": {
+                "instanceID": 24522
+            },
+            "amount": 3
         }
     ]
 }

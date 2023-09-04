@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryContainer:
   - item: {fileID: 11400000, guid: 6fd5cf9f92218cf4694a86029de83c4d, type: 2}
-    amount: 1
+    amount: 3
+  - item: {fileID: 11400000, guid: dce64cffe880bdb45b7ae247de38b1f3, type: 2}
+    amount: 5
   - item: {fileID: 11400000, guid: 1fa7d035a8259bb4babd671f06e8002f, type: 2}
-    amount: 2
+    amount: 3
