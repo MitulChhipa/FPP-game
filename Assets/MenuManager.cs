@@ -7,11 +7,12 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private cameraScript _cameraScript;
     [SerializeField] private GameObject _menuPanel;
     [SerializeField] private AudioSource[] _audioSources;
-    private bool _paused = false;
     [SerializeField] private weaponScript[] _weaponScripts;
-
     [SerializeField] private GameObject _mainMenu;
     [SerializeField] private GameObject[] _other;
+    [SerializeField] private WeaponManager _weaponManager;
+
+    private bool _paused = false;
 
     private void Start()
     {
@@ -21,7 +22,7 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !_weaponManager.scope)
         {
             if (!_paused)
             {

@@ -113,7 +113,7 @@ public class DataManager : MonoBehaviour
         weaponManager.UpdateCurrentWeaponUI();
         Invoke("ResumePlayer", 0.5f);
     }
-    
+
     void NewGameData()
     {
         DataHandle dataHandle = new DataHandle();
