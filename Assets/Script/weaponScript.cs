@@ -142,7 +142,6 @@ public class weaponScript : MonoBehaviour
         _fireRange = weaponScriptable.fireRange; 
         _fireRate = weaponScriptable.fireTime;
         _damage = weaponScriptable.damage;
-        weaponScriptable.totalAmmo = weaponScriptable.totalAmmo;
     }
 
     public void UpdateAmmo()
@@ -178,6 +177,7 @@ public class weaponScript : MonoBehaviour
         }
         if (weaponScriptable.currentAmmo == 0 && !_weaponManager.reloading)
         {
+            click.Play();
             reload();
             return;
         }

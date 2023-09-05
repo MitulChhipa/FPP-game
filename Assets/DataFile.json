@@ -1,33 +1,39 @@
 {
-    "pistolAmmo": 20,
-    "m4Ammo": 40,
-    "totalPistolAmmo": 104,
-    "totalM4Ammo": 192,
-    "health": 74.73574829101563,
-    "foodLevel": 73.80039978027344,
-    "waterLevel": 73.80039978027344,
-    "researchDataValue": 75.0,
+    "pistolAmmo": 15,
+    "m4Ammo": 0,
+    "totalPistolAmmo": 93,
+    "totalM4Ammo": 0,
+    "health": 100.0,
+    "foodLevel": 100.0,
+    "waterLevel": 100.0,
+    "researchDataValue": 0.0,
     "position": {
-        "x": 635.9548950195313,
-        "y": 15.8139009475708,
-        "z": 535.608154296875
+        "x": 654.760009765625,
+        "y": 12.240955352783204,
+        "z": 496.4700012207031
     },
     "rotation": {
         "x": 0.0,
-        "y": 0.3026740849018097,
+        "y": 0.08071468770503998,
         "z": 0.0,
-        "w": -0.9530941247940064
+        "w": 0.9967372417449951
     },
     "slots": [
         {
             "item": {
-                "instanceID": 24090
+                "instanceID": 24092
             },
-            "amount": 3
+            "amount": 2
         },
         {
             "item": {
-                "instanceID": 24522
+                "instanceID": 24296
+            },
+            "amount": 37
+        },
+        {
+            "item": {
+                "instanceID": 24564
             },
             "amount": 3
         }

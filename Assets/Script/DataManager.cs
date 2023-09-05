@@ -15,19 +15,6 @@ public class DataManager : MonoBehaviour
     public WeaponScriptable m4;
 
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            SaveData();
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-
-            Invoke("LoadData", 0f);
-        }
-    }
-
     public void SaveData()
     {
         DataHandle dataHandle = new DataHandle();

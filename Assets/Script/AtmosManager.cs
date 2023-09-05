@@ -20,11 +20,9 @@ public class AtmosManager : MonoBehaviour
     public void DisableFog()
     {
         targetColor = Color.black;
-        //RenderSettings.fog = false;
     }
     public void EnableFog()
     {
         targetColor = defaultColor;
-       
     }
 }

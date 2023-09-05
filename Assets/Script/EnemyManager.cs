@@ -20,7 +20,7 @@ public class EnemyManager : MonoBehaviour
 
     private void instantiateEnemy()
     {
-        if (count > _maxEnemy)
+        if (count == _maxEnemy)
         {
             return;
         }
