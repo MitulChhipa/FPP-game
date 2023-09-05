@@ -21,9 +21,9 @@ MonoBehaviour:
   restoreStamina: 0
   restoreWater: 0
   increaseKnowledgeValue: 0
-  currentAmmo: 15
+  currentAmmo: 20
   maxAmmo: 20
-  totalAmmo: 93
+  totalAmmo: 150
   fireTime: 0.5
   fireRange: 100
   damage: 20

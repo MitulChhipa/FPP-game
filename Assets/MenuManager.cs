@@ -10,9 +10,13 @@ public class MenuManager : MonoBehaviour
     private bool _paused = false;
     [SerializeField] private weaponScript[] _weaponScripts;
 
+    [SerializeField] private GameObject _mainMenu;
+    [SerializeField] private GameObject[] _other;
+
     private void Start()
     {
         _menuPanel.SetActive(false);
+        ActiveMainMenu();
     }
 
     private void Update()
@@ -52,5 +56,28 @@ public class MenuManager : MonoBehaviour
         {
             _weaponScripts[i].enabled = true;
         }
+    }
+
+    public void ActiveMainMenu()
+    {
+        Time.timeScale = 1f;
+        _mainMenu.SetActive(true);
+        for (int i = 0; i < _other.Length; i++)
+        {
+            _other[i].SetActive(false);
+        }
+    }
+    public void DeactivateMainMenu()
+    {
+        _mainMenu.SetActive(false );
+        for (int i = 0; i < _other.Length; i++)
+        {
+            _other[i].SetActive(true);
+        }
+        Resume();
+    }
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

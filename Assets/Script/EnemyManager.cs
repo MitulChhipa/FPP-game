@@ -36,7 +36,6 @@ public class EnemyManager : MonoBehaviour
         }
 
         GameObject x = Instantiate(y, spawnPoints[Random.Range(0, spawnPoints.Length - 1)].position, Quaternion.identity, this.transform);
-        x.GetComponent<NavMeshAgent>().isStopped = false;
     }
     public Vector3 RandomPosition()
     {
