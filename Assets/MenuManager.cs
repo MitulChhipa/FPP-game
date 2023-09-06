@@ -9,9 +9,12 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private AudioSource[] _audioSources;
     [SerializeField] private weaponScript[] _weaponScripts;
     [SerializeField] private GameObject _mainMenu;
+    [SerializeField] private GameObject _gameOverPanel;
     [SerializeField] private GameObject[] _other;
     [SerializeField] private WeaponManager _weaponManager;
+    [SerializeField] private playerMovementCC _playerMovementCC;
 
+    private bool _canActiveMenu;
     private bool _paused = false;
 
     private void Start()
@@ -22,7 +25,7 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !_weaponManager.scope)
+        if (Input.GetKeyDown(KeyCode.Escape) && !_weaponManager.scope && _canActiveMenu)
         {
             if (!_paused)
             {
@@ -49,10 +52,13 @@ public class MenuManager : MonoBehaviour
     public void Resume()
     {
         Time.timeScale = 1f;
+        _canActiveMenu = true;
         _cameraScript.enabled = true;
         _paused = false;
+        _gameOverPanel.SetActive(false);    
         _menuPanel.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
+        _weaponManager.ActivateWeapon();
         for (int i = 0; i < _weaponScripts.Length; i++)
         {
             _weaponScripts[i].enabled = true;
@@ -63,6 +69,7 @@ public class MenuManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         _mainMenu.SetActive(true);
+        _playerMovementCC.enabled = false;
         for (int i = 0; i < _other.Length; i++)
         {
             _other[i].SetActive(false);
@@ -71,6 +78,7 @@ public class MenuManager : MonoBehaviour
     public void DeactivateMainMenu()
     {
         _mainMenu.SetActive(false );
+        _playerMovementCC.enabled = false;
         for (int i = 0; i < _other.Length; i++)
         {
             _other[i].SetActive(true);
@@ -80,5 +88,15 @@ public class MenuManager : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void GameOver()
+    {
+        _canActiveMenu = false;
+        _playerMovementCC.enabled = false;
+        _gameOverPanel.SetActive(true);
+        _weaponManager.deactivationAllWeapons();
+        Cursor.lockState = CursorLockMode.Confined;
+        _cameraScript.enabled = false;
     }
 }

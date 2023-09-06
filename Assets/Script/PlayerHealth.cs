@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Image _water;
     [SerializeField] private Image _food;
     [SerializeField] private Animator _panelAnimator;
+    [SerializeField] private MenuManager _menuManager;
 
 
     public bool canRun = true;
@@ -35,11 +36,15 @@ public class PlayerHealth : MonoBehaviour
 
     public void changeHealth(float valueChange)
     {
-        if(valueChange < 0)
+        if(valueChange < 0f)
         {
             _panelAnimator.SetTrigger("Attack");
         }
         changeValues(ref health, valueChange,ref _health);
+        if(health == 0)
+        {
+            _menuManager.GameOver();
+        }
     }
     public void changeWater(float valueChange)
     {

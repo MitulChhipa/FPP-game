@@ -2231,6 +2231,7 @@ MonoBehaviour:
   _enemySoundManager: {fileID: 655104934763235121}
   _bloodSample: {fileID: 6820990289962108480, guid: 6640da71e5bcf664a8ef0a5d68142999, type: 3}
   _enemyManager: {fileID: 0}
+  _respawnTime: 20
   agent: {fileID: 2942496569866975795}
   _dead: 0
   _enemyHealth: 100

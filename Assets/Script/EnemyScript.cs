@@ -12,7 +12,8 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private EnemySoundManager _enemySoundManager;
     [SerializeField] private GameObject _bloodSample;
     [SerializeField] private EnemyManager _enemyManager;
-    
+    [SerializeField] private float _respawnTime;
+
     public NavMeshAgent agent;
     public bool _dead = false;
 
@@ -106,7 +107,7 @@ public class EnemyScript : MonoBehaviour
         _collider.enabled = false;
         _ragdollController.activeRagDoll();
         _enemySoundManager.StopAllSound();
-        Invoke("ResetAndRespawn", 15f);
+        Invoke("ResetAndRespawn", _respawnTime);
         DropItem();
         Invoke("DeactivatingEnemy", 5f);
     }

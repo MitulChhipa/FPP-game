@@ -48,13 +48,13 @@ public class WeaponManager : MonoBehaviour
             _currentWeaponCount %= _weapon.Length;
         }
     }
-    void ActivateCurrentWeapon(int x)
+    private void ActivateCurrentWeapon(int x)
     {
         _weapon[x].SetActive(true);
         _weaponImage.sprite = _weapon[x].GetComponent<weaponScript>().weaponScriptable.image;
         UpdateCurrentWeaponUI();
     }
-    void deactivationAllWeapons()
+    public void deactivationAllWeapons()
     {
         for (int i = 0; i < _weapon.Length; i++)
         {
@@ -64,5 +64,9 @@ public class WeaponManager : MonoBehaviour
     public void UpdateCurrentWeaponUI()
     {
         _weapon[_currentWeaponCount].GetComponent<weaponScript>().UpdateUI();
+    }
+    public void ActivateWeapon()
+    {
+        ActivateCurrentWeapon(_currentWeaponCount);
     }
 }

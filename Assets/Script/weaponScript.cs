@@ -121,14 +121,14 @@ public class weaponScript : MonoBehaviour
 
     private void cameraScope()
     {
-        if (Input.GetMouseButtonDown(1) && !_weaponManager.reloading && !_weaponManager.scope && weaponScriptable.type == itemType.ShootingWeapon)
+        if (Input.GetMouseButtonDown(1) && !_weaponManager.reloading /*&& !_weaponManager.scope*/ && weaponScriptable.type == itemType.ShootingWeapon)
         {
             _fireArmAnimator.SetBool("Scope", true);
             _animator.SetBool("Scope", true);
             _weaponManager.scope = true;
             _crossHair.SetActive(false);
         }
-        else if (Input.GetMouseButtonDown(1) && _weaponManager.scope)
+        else if (Input.GetMouseButtonUp(1) && _weaponManager.scope)
         {
             _fireArmAnimator.SetBool("Scope", false);
             _animator.SetBool("Scope", false);
