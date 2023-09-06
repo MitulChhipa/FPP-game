@@ -10,22 +10,25 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private weaponScript[] _weaponScripts;
     [SerializeField] private GameObject _mainMenu;
     [SerializeField] private GameObject _gameOverPanel;
+    [SerializeField] private GameObject _winPanel;
     [SerializeField] private GameObject[] _other;
     [SerializeField] private WeaponManager _weaponManager;
     [SerializeField] private playerMovementCC _playerMovementCC;
 
-    private bool _canActiveMenu;
+    public bool canActiveMenu;
+    
     private bool _paused = false;
 
     private void Start()
     {
         _menuPanel.SetActive(false);
+        _winPanel.SetActive(false);
         ActiveMainMenu();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !_weaponManager.scope && _canActiveMenu)
+        if (Input.GetKeyDown(KeyCode.Escape) && !_weaponManager.scope && canActiveMenu)
         {
             if (!_paused)
             {
@@ -52,7 +55,7 @@ public class MenuManager : MonoBehaviour
     public void Resume()
     {
         Time.timeScale = 1f;
-        _canActiveMenu = true;
+        canActiveMenu = true;
         _cameraScript.enabled = true;
         _paused = false;
         _gameOverPanel.SetActive(false);    
@@ -92,11 +95,20 @@ public class MenuManager : MonoBehaviour
 
     public void GameOver()
     {
-        _canActiveMenu = false;
+        canActiveMenu = false;
         _playerMovementCC.enabled = false;
         _gameOverPanel.SetActive(true);
         _weaponManager.deactivationAllWeapons();
         Cursor.lockState = CursorLockMode.Confined;
         _cameraScript.enabled = false;
+    }
+    public void Win()
+    {
+        canActiveMenu = false;
+        _playerMovementCC.enabled = false;
+        _winPanel.SetActive(true);
+        _weaponManager.deactivationAllWeapons();
+        Cursor.lockState = CursorLockMode.Confined;
+        _cameraScript.enabled=false;
     }
 }

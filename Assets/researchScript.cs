@@ -9,6 +9,7 @@ public class researchScript : MonoBehaviour
     [SerializeField] private Image _loadingBar;
     public float informationValue;
     private float _targetInformationValue;
+    [SerializeField] private MenuManager _menuManager;
 
     private void Start()
     {
@@ -41,6 +42,10 @@ public class researchScript : MonoBehaviour
     {
         _loadingBar.fillAmount = informationValue/100;
         _loadingPercent.text = "Data aquired : " + informationValue.ToString() + "%";
+        if (informationValue == 100f)
+        {
+            _menuManager.Win();
+        }
     }
     public void ResetValues(float x)
     {

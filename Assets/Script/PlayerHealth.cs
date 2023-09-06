@@ -36,6 +36,10 @@ public class PlayerHealth : MonoBehaviour
 
     public void changeHealth(float valueChange)
     {
+        if (!_menuManager.canActiveMenu)
+        {
+            return;
+        }
         if(valueChange < 0f)
         {
             _panelAnimator.SetTrigger("Attack");
