@@ -61,7 +61,7 @@ public class EnemyScript : MonoBehaviour
     private void checkDestination()
     {
         distance = Vector3.Distance(transform.position, _playerPos.position);
-        if ((distance < 10f || _hit) && _enemyHealth > 0)
+        if ((distance < 30f || _hit) && _enemyHealth > 0)
         {
             agent.speed = 7f;
             agent.SetDestination(_playerPos.position);
@@ -106,12 +106,18 @@ public class EnemyScript : MonoBehaviour
         _collider.enabled = false;
         _ragdollController.activeRagDoll();
         _enemySoundManager.StopAllSound();
-        Invoke("ResetAndRespawn", 5f);
+        Invoke("ResetAndRespawn", 15f);
         DropItem();
+        Invoke("DeactivatingEnemy", 5f);
+    }
+    private void DeactivatingEnemy()
+    {
+        gameObject.SetActive(false);
     }
 
     private void ResetAndRespawn()
     {
+        gameObject.SetActive(true);
         _dead = false;
         _collider.enabled = true;
         _enemyHealth = 100;

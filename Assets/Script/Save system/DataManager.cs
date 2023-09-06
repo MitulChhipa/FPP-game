@@ -1,19 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DataManager : MonoBehaviour
 {
     public PlayerHealth hp;
     public Transform player;
-    public Inventory inventory;
+    public PlayerInitialInfo initialInfo;
     public WeaponManager weaponManager;
     public playerMovementCC playerMovementCC;
     public researchScript research;
     public WeaponScriptable pistol;
     public WeaponScriptable m4;
-
+    public inventoryController inventoryController;
 
     private void Update()
     {
@@ -27,16 +28,7 @@ public class DataManager : MonoBehaviour
     {
         DataHandle dataHandle = new DataHandle();
         dataHandle.health = hp.health;
-        
-        dataHandle.slots = new List<InventorySlot>();
-        dataHandle.items = new List<Items>();
 
-        for(int i = 0;  i < inventory.inventoryContainer.Count; i++)
-        {
-            dataHandle.slots.Add(inventory.inventoryContainer[i]);
-            dataHandle.items.Add(inventory.inventoryContainer[i].item);
-        }
-        
         dataHandle.waterLevel = hp.water;
         dataHandle.foodLevel = hp.food;
         dataHandle.position = player.position;
@@ -49,6 +41,8 @@ public class DataManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(dataHandle,true);
         File.WriteAllText(Application.dataPath + "/DataFile.json", json);
+
+        inventoryController.SaveCurrentInventory();
     }
 
     public void LoadData()
@@ -63,16 +57,6 @@ public class DataManager : MonoBehaviour
         player.position = dataHandle.position; 
         player.rotation = dataHandle.rotation;
 
-
-        inventory.inventoryContainer.Clear();
-        for (int i = 0; i < dataHandle.slots.Count; i++)
-        {
-            InventorySlot slot = dataHandle.slots[i];
-            slot.item = dataHandle.items[i];
-            inventory.inventoryContainer.Add(slot);
-        }
-
-
         m4.totalAmmo = dataHandle.totalM4Ammo;
         pistol.totalAmmo = dataHandle.totalPistolAmmo;
         pistol.currentAmmo = dataHandle.pistolAmmo;
@@ -81,37 +65,48 @@ public class DataManager : MonoBehaviour
         hp.UpdateAllHpUi();
         weaponManager.UpdateCurrentWeaponUI();
         Invoke("ResumePlayer", 0.5f);
+        inventoryController.LoadSavedGameInventory();
     }
-    public void NewGameLoad()
+    //public void NewGameLoad()
+    //{
+    //    playerMovementCC.enabled = false;
+    //    string json = File.ReadAllText(Application.dataPath + "/NewGameDataFile.json");
+    //    DataHandle dataHandle = JsonUtility.FromJson<DataHandle>(json);
+
+    //    hp.health = dataHandle.health;
+    //    hp.water = dataHandle.waterLevel;
+    //    hp.food = dataHandle.foodLevel;
+    //    hp.stamina = 100f;
+
+    //    player.position = dataHandle.position;
+    //    player.rotation = dataHandle.rotation;
+    //    m4.totalAmmo = dataHandle.totalM4Ammo;
+    //    pistol.totalAmmo = dataHandle.totalPistolAmmo;
+    //    pistol.currentAmmo = dataHandle.pistolAmmo;
+    //    m4.currentAmmo = dataHandle.m4Ammo;
+    //    research.ResetValues(dataHandle.researchDataValue);
+    //    hp.UpdateAllHpUi();
+    //    weaponManager.UpdateCurrentWeaponUI();
+    //    Invoke("ResumePlayer", 0.5f);
+    //}
+    public void StartNewGame()
     {
         playerMovementCC.enabled = false;
-        string json = File.ReadAllText(Application.dataPath + "/NewGameDataFile.json");
-        DataHandle dataHandle = JsonUtility.FromJson<DataHandle>(json);
+        hp.health = initialInfo.health;
+        hp.water = initialInfo.waterLevel;
+        hp.food = initialInfo.foodLevel;
 
-        hp.health = dataHandle.health;
-        hp.water = dataHandle.waterLevel;
-        hp.food = dataHandle.foodLevel;
-
-        inventory.inventoryContainer.Clear();
-
-        for (int i = 0; i < dataHandle.slots.Count; i++)
-        {
-            InventorySlot slot = dataHandle.slots[i];
-            slot.item = dataHandle.items[i];
-            inventory.inventoryContainer.Add(slot);
-        }
-
-
-        player.position = dataHandle.position;
-        player.rotation = dataHandle.rotation;
-        m4.totalAmmo = dataHandle.totalM4Ammo;
-        pistol.totalAmmo = dataHandle.totalPistolAmmo;
-        pistol.currentAmmo = dataHandle.pistolAmmo;
-        m4.currentAmmo = dataHandle.m4Ammo;
-        research.ResetValues(dataHandle.researchDataValue);
+        player.position = initialInfo.position;
+        player.rotation = initialInfo.rotation;
+        m4.totalAmmo = initialInfo.totalM4Ammo;
+        pistol.totalAmmo = initialInfo.totalPistolAmmo;
+        pistol.currentAmmo = initialInfo.pistolAmmo;
+        m4.currentAmmo = initialInfo.m4Ammo;
+        research.ResetValues(initialInfo.researchDataValue);
         hp.UpdateAllHpUi();
         weaponManager.UpdateCurrentWeaponUI();
         Invoke("ResumePlayer", 0.5f);
+        inventoryController.LoadNewGameInventory();
     }
 
     void NewGameData()
@@ -122,14 +117,6 @@ public class DataManager : MonoBehaviour
         dataHandle.foodLevel = 100f;
         dataHandle.position = player.position;
         dataHandle.rotation = player.rotation;
-
-        dataHandle.slots = new List<InventorySlot>();
-        dataHandle.items = new List<Items>();
-        for (int i = 0; i < inventory.inventoryContainer.Count; i++)
-        {
-            dataHandle.slots.Add(inventory.inventoryContainer[i]);
-            dataHandle.items.Add(inventory.inventoryContainer[i].item);
-        }
 
         dataHandle.totalPistolAmmo = pistol.totalAmmo;
         dataHandle.totalM4Ammo = m4.totalAmmo;

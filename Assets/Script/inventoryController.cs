@@ -1,8 +1,11 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class inventoryController : MonoBehaviour
 {
-    [SerializeField] private Inventory _inventory;
+    [SerializeField] private Inventory _currentInventory;
+    [SerializeField] private Inventory _baseInventory;
+    [SerializeField] private Inventory _savedInventory;
     [SerializeField] private Transform _raycastTargetOrigin;
     [SerializeField] private float _collectingRange;
     [SerializeField] private GameObject _inventoryPanel;
@@ -13,6 +16,8 @@ public class inventoryController : MonoBehaviour
     private bool _isOpened;
     private Ray _ray;
     private RaycastHit _hit;
+
+    public Slot[] inventory;
 
     private void Start()
     {
@@ -52,7 +57,7 @@ public class inventoryController : MonoBehaviour
             {
                 case "Item":
                     var item = _hit.collider.gameObject.GetComponent<itemScript>().item;
-                    _inventory.addItem(item, 1);
+                    _currentInventory.addItem(item, 1);
                     Destroy(_hit.collider.gameObject);
                     break;
                 case "Computer":
@@ -65,7 +70,7 @@ public class inventoryController : MonoBehaviour
 
     private void OpenInventory()
     {
-        foreach (var itemSlot in _inventory.inventoryContainer)
+        foreach (var itemSlot in _currentInventory.inventoryContainer)
         {
             var Ui = Instantiate(_itemContainer, _inventoryContainer.transform);
             var UiScript = Ui.GetComponent<SettingComponent>();
@@ -105,35 +110,35 @@ public class inventoryController : MonoBehaviour
                 ApplyItemEffect(5);
                 break;
         }
-        if (_isOpened)
-        {
-            ResetInventory();
-        }
     }
 
     void ApplyItemEffect(int range)
     {
-        if (range >= _inventory.inventoryContainer.Count || _inventory.inventoryContainer[range].item.type != itemType.Consumable)
+        if (range >= _currentInventory.inventoryContainer.Count || _currentInventory.inventoryContainer[range].item.type != itemType.Consumable)
         {
             return;
         }
 
-        float healthBoost = _inventory.inventoryContainer[range].item.restoreHealth;
-        float staminaBoost = _inventory.inventoryContainer[range].item.restoreStamina;
-        float foodBoost = _inventory.inventoryContainer[range].item.restoreFood;
-        float waterBoost = _inventory.inventoryContainer[range].item.restoreWater;
+        float healthBoost = _currentInventory.inventoryContainer[range].item.restoreHealth;
+        float staminaBoost = _currentInventory.inventoryContainer[range].item.restoreStamina;
+        float foodBoost = _currentInventory.inventoryContainer[range].item.restoreFood;
+        float waterBoost = _currentInventory.inventoryContainer[range].item.restoreWater;
 
         _hp.changeFood(foodBoost);
         _hp.changeWater(waterBoost);
         _hp.changeHealth(healthBoost);
         _hp.changeStamina(staminaBoost);
-        if (_inventory.inventoryContainer[range].amount > 1)
+        if (_currentInventory.inventoryContainer[range].amount > 1)
         {
-            _inventory.inventoryContainer[range].changeAmount(-1);
+            _currentInventory.inventoryContainer[range].changeAmount(-1);
         }
         else
         {
-            _inventory.inventoryContainer.RemoveRange(range, 1);
+            _currentInventory.inventoryContainer.RemoveRange(range, 1);
+        }
+        if (_isOpened)
+        {
+            ResetInventory();
         }
     }
     private void ResetInventory()
@@ -144,15 +149,37 @@ public class inventoryController : MonoBehaviour
     
     private void UseCollectibles(ref researchScript x)
     {
-        for(int i=0;i<_inventory.inventoryContainer.Count;i++)
+        for(int i=0;i<_currentInventory.inventoryContainer.Count;i++)
         {
-            if(_inventory.inventoryContainer[i].item.type == itemType.Collectible)
+            if(_currentInventory.inventoryContainer[i].item.type == itemType.Collectible)
             {
-                //x.informationValue = _inventory.inventoryContainer[i].amount * _inventory.inventoryContainer[i].item.increaseKnowledgeValue;
-                x.UpdateInformationData(_inventory.inventoryContainer[i].amount * _inventory.inventoryContainer[i].item.increaseKnowledgeValue);
-                _inventory.inventoryContainer.RemoveRange(i, 1);
+                x.UpdateInformationData(_currentInventory.inventoryContainer[i].amount * _currentInventory.inventoryContainer[i].item.increaseKnowledgeValue);
+                _currentInventory.inventoryContainer.RemoveRange(i, 1);
                 return;
             }
+        }
+    }
+
+    public void LoadNewGameInventory()
+    {
+        CopyInventory(ref _currentInventory, _baseInventory);
+    }
+
+    public void LoadSavedGameInventory()
+    {
+        CopyInventory(ref _currentInventory, _savedInventory);
+    }
+    public void SaveCurrentInventory()
+    {
+        CopyInventory(ref _savedInventory, _currentInventory);
+    }
+
+    private void CopyInventory(ref Inventory to,Inventory from)
+    {
+        to.inventoryContainer.Clear();
+        for (int i = 0; i < from.inventoryContainer.Count; i++)
+        {
+            to.addItem(from.inventoryContainer[i].item, from.inventoryContainer[i].amount);
         }
     }
 }

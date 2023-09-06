@@ -1,70 +1,21 @@
 {
     "pistolAmmo": 20,
-    "m4Ammo": 25,
-    "totalPistolAmmo": 139,
-    "totalM4Ammo": 190,
-    "health": 100.0,
-    "foodLevel": 96.10005950927735,
-    "waterLevel": 96.10005950927735,
+    "m4Ammo": 40,
+    "totalPistolAmmo": 124,
+    "totalM4Ammo": 118,
+    "health": 70.0,
+    "foodLevel": 90.90013885498047,
+    "waterLevel": 90.90013885498047,
     "researchDataValue": 0.0,
     "position": {
-        "x": 552.3839721679688,
-        "y": 15.798253059387207,
-        "z": 648.708984375
+        "x": 494.95587158203127,
+        "y": 16.38518524169922,
+        "z": 633.6864013671875
     },
     "rotation": {
         "x": 0.0,
-        "y": 0.10820680856704712,
+        "y": 0.9974812269210815,
         "z": 0.0,
-        "w": 0.994128406047821
-    },
-    "slots": [
-        {
-            "item": {
-                "instanceID": 24096
-            },
-            "amount": 3
-        },
-        {
-            "item": {
-                "instanceID": 24584
-            },
-            "amount": 4
-        },
-        {
-            "item": {
-                "instanceID": 24850
-            },
-            "amount": 2
-        },
-        {
-            "item": {
-                "instanceID": 25178
-            },
-            "amount": 2
-        },
-        {
-            "item": {
-                "instanceID": 24320
-            },
-            "amount": 2
-        }
-    ],
-    "items": [
-        {
-            "instanceID": 24096
-        },
-        {
-            "instanceID": 24584
-        },
-        {
-            "instanceID": 24850
-        },
-        {
-            "instanceID": 25178
-        },
-        {
-            "instanceID": 24320
-        }
-    ]
+        "w": 0.07093127071857453
+    }
 }
