@@ -13,6 +13,8 @@ public class inventoryController : MonoBehaviour
     [SerializeField] private GameObject _itemContainer;
     [SerializeField] private PlayerHealth _hp;
 
+    public InventoryJS _inventoryJS;
+
     private bool _isOpened;
     private Ray _ray;
     private RaycastHit _hit;
@@ -21,6 +23,11 @@ public class inventoryController : MonoBehaviour
 
     private void Start()
     {
+        //inventory = new Slot[_currentInventory.inventoryContainer.Count];
+        //for(int i = 0; i < _currentInventory.inventoryContainer.Count; i++)
+        //{
+        //    inventory[i].SetValuesSlot(_currentInventory.inventoryContainer[i]);
+        //} 
         _inventoryPanel.SetActive(false);
     }
 
@@ -70,13 +77,15 @@ public class inventoryController : MonoBehaviour
 
     private void OpenInventory()
     {
-        foreach (var itemSlot in _currentInventory.inventoryContainer)
+        for (int i = 0; i < _currentInventory.inventoryContainer.Count;i++)
         {
             var Ui = Instantiate(_itemContainer, _inventoryContainer.transform);
             var UiScript = Ui.GetComponent<SettingComponent>();
-            UiScript._name.text = itemSlot.item.itemName +"\n"+ itemSlot.amount.ToString();
-            UiScript._description.text = itemSlot.item.description;
-            UiScript._icon.sprite = itemSlot.item.image;
+            UiScript._name.text = _currentInventory.inventoryContainer[i].item.itemName +"\n"+ _currentInventory.inventoryContainer[i].amount.ToString();
+            UiScript._description.text = _currentInventory.inventoryContainer[i].item.description;
+            UiScript._icon.sprite = _currentInventory.inventoryContainer[i].item.image;
+            UiScript.id = i;
+            UiScript.inventoryController = this.GetComponent<inventoryController>();
         }
     }
 
@@ -112,7 +121,7 @@ public class inventoryController : MonoBehaviour
         }
     }
 
-    void ApplyItemEffect(int range)
+    public void ApplyItemEffect(int range)
     {
         if (range >= _currentInventory.inventoryContainer.Count || _currentInventory.inventoryContainer[range].item.type != itemType.Consumable)
         {
@@ -172,6 +181,7 @@ public class inventoryController : MonoBehaviour
     public void SaveCurrentInventory()
     {
         CopyInventory(ref _savedInventory, _currentInventory);
+        
     }
 
     private void CopyInventory(ref Inventory to,Inventory from)

@@ -42,6 +42,9 @@ public class DataManager : MonoBehaviour
         string json = JsonUtility.ToJson(dataHandle,true);
         File.WriteAllText(Application.dataPath + "/DataFile.json", json);
 
+        //string jsonInventory = JsonUtility.ToJson(inventoryController._inventoryJS,true);
+        //File.WriteAllText(Application.dataPath + "/Inventory.json", jsonInventory);
+
         inventoryController.SaveCurrentInventory();
     }
 

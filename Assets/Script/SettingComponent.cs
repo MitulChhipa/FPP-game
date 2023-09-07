@@ -8,8 +8,15 @@ using Image = UnityEngine.UI.Image;
 
 public class SettingComponent : MonoBehaviour
 {
-
     public TextMeshProUGUI _name;
     public TextMeshProUGUI _description;
     public Image _icon;
+    public int id;
+    public inventoryController inventoryController;
+    public Items item;
+
+    public void UseThisItem()
+    {
+        inventoryController.ApplyItemEffect(id);
+    }
 }

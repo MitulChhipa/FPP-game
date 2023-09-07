@@ -8,7 +8,7 @@ public class InventoryJS
 {
     public List<Slot> Inventory;
 
-    public void SetValuesInventory(Inventory inventoryScriptable)
+    public void SetValuesInventory(in Inventory inventoryScriptable)
     {
         for(int i = 0; i< inventoryScriptable.inventoryContainer.Count; i++)
         {
@@ -23,9 +23,9 @@ public class Slot
     public ItemJS itemJS;
     public int amount;
 
-    public void SetValuesSlot(InventorySlot x)
+    public void SetValuesSlot(in InventorySlot x)
     {
-        itemJS.SetValuesItem(x.item);
+        itemJS.SetValuesItem(in x.item);
         amount = x.amount;
     }
 }
@@ -47,7 +47,7 @@ public class ItemJS
     //for collectibles;
     public float increaseKnowledgeValue;
 
-    public void SetValuesItem(Items x)
+    public void SetValuesItem(in Items x)
     {
         type = x.type;
         image = x.image;
