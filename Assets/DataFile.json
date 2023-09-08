@@ -1,21 +1,22 @@
 {
-    "pistolAmmo": 8,
+    "pistolAmmo": 20,
     "m4Ammo": 40,
-    "totalPistolAmmo": 54,
-    "totalM4Ammo": 136,
-    "health": 90.0,
-    "foodLevel": 70.90044403076172,
-    "waterLevel": 70.90044403076172,
-    "researchDataValue": 11.522943496704102,
+    "totalPistolAmmo": 150,
+    "totalM4Ammo": 200,
+    "health": 100.0,
+    "foodLevel": 100.0,
+    "waterLevel": 100.0,
+    "researchDataValue": 0.0,
     "position": {
-        "x": 648.9957885742188,
-        "y": 13.88292121887207,
-        "z": 519.9739379882813
+        "x": 655.7969360351563,
+        "y": 12.445995330810547,
+        "z": 498.38330078125
     },
     "rotation": {
         "x": 0.0,
-        "y": -0.09131525456905365,
+        "y": -0.10903007537126541,
         "z": 0.0,
-        "w": 0.9958220720291138
-    }
+        "w": 0.9940385222434998
+    },
+    "InventoryJSON": []
 }

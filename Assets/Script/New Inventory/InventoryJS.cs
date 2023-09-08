@@ -6,13 +6,13 @@ using UnityEngine;
 [System.Serializable]
 public class InventoryJS
 {
-    public List<Slot> Inventory;
+    public List<Slot> Slots;
 
     public void SetValuesInventory(in Inventory inventoryScriptable)
     {
         for(int i = 0; i< inventoryScriptable.inventoryContainer.Count; i++)
         {
-            Inventory[i].SetValuesSlot(inventoryScriptable.inventoryContainer[i]);   
+            Slots[i].SetValuesSlot(inventoryScriptable.inventoryContainer[i]);   
         }
     }
 }

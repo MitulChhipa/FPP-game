@@ -15,6 +15,7 @@ public class DataManager : MonoBehaviour
     public WeaponScriptable pistol;
     public WeaponScriptable m4;
     public inventoryController inventoryController;
+    public Inventory Inventory;
 
     private void Update()
     {

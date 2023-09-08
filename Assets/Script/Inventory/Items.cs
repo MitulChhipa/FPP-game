@@ -24,4 +24,4 @@ public abstract class Items : ScriptableObject
 
     //for collectibles;
     public float increaseKnowledgeValue;
-}
+}   
