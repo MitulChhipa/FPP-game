@@ -10,6 +10,9 @@ public class playerMovementCC : MonoBehaviour
     [SerializeField] private PlayerHealth _ph;
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _gravitationalAcc;
+    [SerializeField] private Animator _movementAnimator;
+    [SerializeField] private AudioSource _walkAudio;
+    [SerializeField] private AudioSource _runAudio;
 
     private float _y, _playerSpeed;
     private Vector3 _localDirection = new Vector3();
@@ -66,7 +69,25 @@ public class playerMovementCC : MonoBehaviour
         _localDirection = transform.TransformDirection(_inputDirection);
         _localDirection.Normalize();
         _controller.Move((_localDirection * _playerSpeed + _gravity) * Time.deltaTime);
-        
+        if(_localDirection.sqrMagnitude > 0 && _controller.isGrounded)
+        {
+            _movementAnimator.SetBool("Movement", true);
+            _movementAnimator.SetFloat("Blend", _playerSpeed / _sprintSpeed);
+            if (_playerSpeed/_sprintSpeed > 0.9f)
+            {
+                RunSound();
+            }
+            else
+            {
+                WalkSound();
+            }
+        }
+        else
+        {
+            _movementAnimator.SetBool("Movement", false);
+            _walkAudio.Stop();
+            _runAudio.Stop();
+        }
     }
 
     private void inputStates()
@@ -159,5 +180,29 @@ public class playerMovementCC : MonoBehaviour
         {
             _ph.canRun = false;
         }
+    }
+
+    private void WalkSound()
+    {
+        if (_runAudio.isPlaying)
+        {
+            _runAudio.Stop();
+        }
+        if (_walkAudio.isPlaying)
+        {
+            return;
+        }
+        _walkAudio.Play();
+    }private void RunSound()
+    {
+        if (_walkAudio.isPlaying)
+        {
+            _walkAudio.Stop();
+        }
+        if (_runAudio.isPlaying)
+        {
+            return;
+        }
+        _runAudio.Play();
     }
 }

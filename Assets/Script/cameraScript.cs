@@ -12,7 +12,6 @@ public class cameraScript : MonoBehaviour
     [SerializeField] private Camera _cameraPOV;
 
     private bool _torchOn = false;
-    private Vector3 _offset = new Vector3(0,0.8f,0);
     private Vector3 _rotation;
     private float _x;
     private void Start()
@@ -32,8 +31,6 @@ public class cameraScript : MonoBehaviour
         _rotation.y = _player.rotation.eulerAngles.y;
         _rotation.z = _camera.rotation.eulerAngles.z;
 
-        _camera.position = _player.position + _offset;
-
         if (!_torchOn && Input.GetKeyDown(KeyCode.T))
         {
             _torchOn = true;
@@ -44,7 +41,6 @@ public class cameraScript : MonoBehaviour
             _torch.SetActive(false);
             _torchOn = false;
         }
-
     }
     private void LateUpdate()
     {

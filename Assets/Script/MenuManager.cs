@@ -14,6 +14,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject _winPanel;
     [SerializeField] private GameObject[] _other;
     [SerializeField] private playerMovementCC _playerMovementCC;
+    [SerializeField] private EnemyManager enemyManager;
 
     public bool canActiveMenu;
     
@@ -71,6 +72,7 @@ public class MenuManager : MonoBehaviour
 
     public void ActiveMainMenu()
     {
+        enemyManager.ResetAllEnemies();
         _weaponManager.enabled = true;
         Time.timeScale = 1f;
         _mainMenu.SetActive(true);

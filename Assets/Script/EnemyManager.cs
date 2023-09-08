@@ -41,4 +41,9 @@ public class EnemyManager : MonoBehaviour
     {
         return spawnPoints[Random.Range(0, spawnPoints.Length - 1)].position;
     }
+
+    public void ResetAllEnemies()
+    {
+        BroadcastMessage("ResetAndRespawn");
+    }
 }
