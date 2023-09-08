@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class cameraScript : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class cameraScript : MonoBehaviour
     [SerializeField] private Transform _player;
     [SerializeField] private GameObject _torch;
     [SerializeField] private Camera _cameraPOV;
+    [SerializeField] private Image _torchImage;
 
     private bool _torchOn = false;
     private Vector3 _rotation;
@@ -34,10 +36,12 @@ public class cameraScript : MonoBehaviour
         if (!_torchOn && Input.GetKeyDown(KeyCode.T))
         {
             _torchOn = true;
+            _torchImage.color = Color.white;
             _torch.SetActive(true);
         }
         else if(_torchOn && Input.GetKeyDown(KeyCode.T))
         {
+            _torchImage.color = Color.black;
             _torch.SetActive(false);
             _torchOn = false;
         }
