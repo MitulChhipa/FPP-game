@@ -10,15 +10,17 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _mapSprite;
     [SerializeField] private EnemySoundManager _enemySoundManager;
-    [SerializeField] private GameObject _bloodSample;
+    [SerializeField] private GameObject _bloodSamplePrefab;
+    
     [SerializeField] private EnemyManager _enemyManager;
     [SerializeField] private float _respawnTime;
+    [SerializeField]private float _enemyHealth = 100;
 
     public NavMeshAgent agent;
     public bool _dead = false;
+    public Transform sampleTransform;
 
     private Collider _collider;
-    [SerializeField]private float _enemyHealth = 100;
     bool _hit = false;
     float distance;
     private GameObject _player;
@@ -26,9 +28,11 @@ public class EnemyScript : MonoBehaviour
     private bool _walking;
     private bool _isAttacking;
     private float _walkTimer;
+    private GameObject _bloodSample;
 
     private void Start()
     {
+        _bloodSample = Instantiate(_bloodSamplePrefab,sampleTransform);
         _enemyManager = transform.parent.GetComponent<EnemyManager>();
         _player = GameObject.FindWithTag("Player");
         _playerPos = _player.GetComponent<Transform>();
@@ -148,7 +152,9 @@ public class EnemyScript : MonoBehaviour
 
     private void DropItem()
     {
-        Instantiate(_bloodSample, transform.position, Quaternion.identity);
+        //Instantiate(_bloodSample, transform.position, Quaternion.identity);
+        _bloodSample.transform.position = transform.position;
+        _bloodSample.SetActive(true);
     }
 }
 

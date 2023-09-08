@@ -65,7 +65,7 @@ public class inventoryController : MonoBehaviour
                 case "Item":
                     var item = _hit.collider.gameObject.GetComponent<itemScript>().item;
                     _currentInventory.addItem(item, 1);
-                    Destroy(_hit.collider.gameObject);
+                    _hit.collider.gameObject.SetActive(false);
                     break;
                 case "Computer":
                     researchScript _researchScript = _hit.collider.gameObject.GetComponent<researchScript>();

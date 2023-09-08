@@ -16,6 +16,7 @@ public class DataManager : MonoBehaviour
     public WeaponScriptable m4;
     public inventoryController inventoryController;
     public Inventory Inventory;
+    [SerializeField] private CollectiblesScript _collectibles;
 
     private void Update()
     {
@@ -70,6 +71,7 @@ public class DataManager : MonoBehaviour
         weaponManager.UpdateCurrentWeaponUI();
         Invoke("ResumePlayer", 0.5f);
         inventoryController.LoadSavedGameInventory();
+        _collectibles.ResetCollectibles();
     }
     //public void NewGameLoad()
     //{
@@ -111,6 +113,7 @@ public class DataManager : MonoBehaviour
         weaponManager.UpdateCurrentWeaponUI();
         Invoke("ResumePlayer", 0.5f);
         inventoryController.LoadNewGameInventory();
+        _collectibles.ResetCollectibles();
     }
 
     void NewGameData()

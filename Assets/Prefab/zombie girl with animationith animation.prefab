@@ -462,12 +462,13 @@ MonoBehaviour:
   _animator: {fileID: 4903299238235542776}
   _mapSprite: {fileID: 950979059536536350}
   _enemySoundManager: {fileID: 8854622248943783386}
-  _bloodSample: {fileID: 6820990289962108480, guid: 6640da71e5bcf664a8ef0a5d68142999, type: 3}
+  _bloodSamplePrefab: {fileID: 6820990289962108480, guid: 6640da71e5bcf664a8ef0a5d68142999, type: 3}
   _enemyManager: {fileID: 0}
-  _respawnTime: 30
+  _respawnTime: 300
+  _enemyHealth: 100
   agent: {fileID: 1816625928045411180}
   _dead: 0
-  _enemyHealth: 100
+  sampleTransform: {fileID: 0}
 --- !u!136 &2819639530103956227
 CapsuleCollider:
   m_ObjectHideFlags: 0
