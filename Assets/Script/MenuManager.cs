@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
@@ -15,6 +16,13 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject[] _other;
     [SerializeField] private playerMovementCC _playerMovementCC;
     [SerializeField] private EnemyManager enemyManager;
+
+    [SerializeField] private AudioListener _audioListener1;
+    [SerializeField] private AudioListener _audioListener2;
+    [SerializeField] private Image _audioImage;
+    [SerializeField] private Image _audioImage2;
+    private bool _audioEnable = true;
+
 
     public bool canActiveMenu;
     
@@ -116,5 +124,24 @@ public class MenuManager : MonoBehaviour
         _weaponManager.enabled = false;
         Cursor.lockState = CursorLockMode.Confined;
         _cameraScript.enabled=false;
+    }
+    public void AudioToggle()
+    {
+        if (_audioEnable)
+        {
+            _audioEnable = false;
+            _audioListener1.enabled = false;
+            _audioListener2.enabled = false;
+            _audioImage.color = Color.black;
+            _audioImage2.color = Color.black;
+        }
+        else
+        {
+            _audioEnable = true;
+            _audioListener1.enabled = true;
+            _audioListener2.enabled = true;
+            _audioImage.color = Color.white;
+            _audioImage2.color = Color.white;
+        }
     }
 }
