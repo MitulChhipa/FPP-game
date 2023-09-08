@@ -13,6 +13,8 @@ public class playerMovementCC : MonoBehaviour
     [SerializeField] private Animator _movementAnimator;
     [SerializeField] private AudioSource _walkAudio;
     [SerializeField] private AudioSource _runAudio;
+    [SerializeField] private AudioSource _jumpAudio;
+    [SerializeField] private AudioSource _dropAudio;
 
     private float _y, _playerSpeed;
     private Vector3 _localDirection = new Vector3();
@@ -137,12 +139,14 @@ public class playerMovementCC : MonoBehaviour
         {
             if (_gravity.y < -15f)
             {
+                _dropAudio.Play();
                 _ph.changeHealth(_gravity.y);
             }
             _gravity.y = -1f;
             if (_jump)
             {
                 _gravity.y = _jumpForce;
+                _jumpAudio.Play();
             }
         }
         else

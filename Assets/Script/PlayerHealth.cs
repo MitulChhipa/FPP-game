@@ -11,7 +11,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Image _food;
     [SerializeField] private Animator _panelAnimator;
     [SerializeField] private MenuManager _menuManager;
-
+    [SerializeField] private AudioSource _hurt;
 
     public bool canRun = true;
     public float health = 100f;
@@ -43,6 +43,7 @@ public class PlayerHealth : MonoBehaviour
         if(valueChange < 0f)
         {
             _panelAnimator.SetTrigger("Attack");
+            _hurt.Play();
         }
         changeValues(ref health, valueChange,ref _health);
         if(health == 0)
