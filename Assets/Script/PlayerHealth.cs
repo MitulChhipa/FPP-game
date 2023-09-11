@@ -21,8 +21,6 @@ public class PlayerHealth : MonoBehaviour
 
 
 
-
-
     private void Start()
     {
         updateUIBar(_health,health);

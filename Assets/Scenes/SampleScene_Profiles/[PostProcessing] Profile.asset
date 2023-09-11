@@ -18,16 +18,16 @@ MonoBehaviour:
     value: 1
   filtering:
     overrideState: 1
-    value: {x: 68.16855, y: 99}
+    value: {x: 68.168564, y: 99}
   minLuminance:
     overrideState: 1
     value: -3
   maxLuminance:
     overrideState: 1
-    value: 3
+    value: 9
   keyValue:
     overrideState: 1
-    value: 0.22
+    value: 0.35
   eyeAdaptation:
     overrideState: 1
     value: 0
@@ -90,10 +90,10 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 0
-    value: 0
+    value: 8
   tint:
     overrideState: 0
-    value: 0
+    value: 29
   colorFilter:
     overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
@@ -101,7 +101,7 @@ MonoBehaviour:
     overrideState: 0
     value: 18
   saturation:
-    overrideState: 1
+    overrideState: 0
     value: -5
   brightness:
     overrideState: 0
@@ -1361,10 +1361,10 @@ MonoBehaviour:
   m_Name: '[PostProcessing] Profile'
   m_EditorClassIdentifier: 
   settings:
-  - {fileID: 4238612131427673291}
   - {fileID: -8883078483686835324}
   - {fileID: -8961822859040438253}
---- !u!114 &4238612131427673291
+  - {fileID: 6729003764171677346}
+--- !u!114 &6729003764171677346
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1373,41 +1373,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
-  m_Name: Bloom
+  m_Script: {fileID: 11500000, guid: b94fcd11afffcb142908bfcb1e261fba, type: 3}
+  m_Name: MotionBlur
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
-  intensity:
-    overrideState: 1
-    value: 4
-  threshold:
-    overrideState: 1
-    value: 1
-  softKnee:
+  shutterAngle:
     overrideState: 0
-    value: 0.5
-  clamp:
+    value: 270
+  sampleCount:
     overrideState: 0
-    value: 65472
-  diffusion:
-    overrideState: 0
-    value: 7
-  anamorphicRatio:
-    overrideState: 0
-    value: 0
-  color:
-    overrideState: 0
-    value: {r: 1, g: 1, b: 1, a: 1}
-  fastMode:
-    overrideState: 0
-    value: 0
-  dirtTexture:
-    overrideState: 0
-    value: {fileID: 0}
-    defaultState: 1
-  dirtIntensity:
-    overrideState: 0
-    value: 0
+    value: 10

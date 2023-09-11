@@ -7,6 +7,7 @@ public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private GameObject _enemy;
     [SerializeField] private GameObject _enemy2;
+    [SerializeField] private Transform _enemyParent;
     [SerializeField] private Transform _player;
     [SerializeField] private Transform _samples;
     [SerializeField] private int _maxEnemy;
@@ -36,7 +37,7 @@ public class EnemyManager : MonoBehaviour
             y = _enemy2;
         }
 
-        GameObject x = Instantiate(y, spawnPoints[Random.Range(0, spawnPoints.Length - 1)].position, Quaternion.identity, this.transform);
+        GameObject x = Instantiate(y, spawnPoints[Random.Range(0, spawnPoints.Length - 1)].position, Quaternion.identity, _enemyParent);
         x.GetComponent<EnemyScript>().sampleTransform = _samples;
     }
     public Vector3 RandomPosition()

@@ -81,6 +81,8 @@ public class MenuManager : MonoBehaviour
 
     public void ActiveMainMenu()
     {
+        _winPanel.SetActive(false);
+        _gameOverPanel.SetActive(false);
         enemyManager.ResetAllEnemies();
         _weaponManager.enabled = true;
         Time.timeScale = 1f;

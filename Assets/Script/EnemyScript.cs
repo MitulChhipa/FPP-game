@@ -148,16 +148,19 @@ public class EnemyScript : MonoBehaviour
 
     private void DropItem()
     {
-        int x = Random.Range(0,10);
-        switch (x)
-        {
-            case 0:
-                _bloodSample.transform.position = transform.position;
-                _bloodSample.SetActive(true);
-                break;
-            default: 
-                break;
-        }
+        //int x = Random.Range(0,10);
+        //switch (x)
+        //{
+        //    case 0:
+        //        _bloodSample.transform.position = transform.position;
+        //        _bloodSample.SetActive(true);
+        //        break;
+        //    default: 
+        //        break;
+        //}
+
+        _bloodSample.transform.position = transform.position;
+        _bloodSample.SetActive(true);
     }
 }
 
