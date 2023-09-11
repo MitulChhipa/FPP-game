@@ -160,7 +160,6 @@ public class inventoryController : MonoBehaviour
     public void SaveCurrentInventory()
     {
         CopyInventory(ref _savedInventory, _currentInventory);
-        AssetDatabase.SaveAssets();
     }
 
     private void CopyInventory(ref Inventory to,Inventory from)
