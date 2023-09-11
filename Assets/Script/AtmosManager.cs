@@ -5,6 +5,7 @@ public class AtmosManager : MonoBehaviour
     //float targetColor;
     Color defaultColor;
     Color targetColor;
+    Material _water;
 
     private void Start()
     {
@@ -15,6 +16,7 @@ public class AtmosManager : MonoBehaviour
     private void Update()
     {
         RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, targetColor, Time.deltaTime * (0.1f));
+        
     }
 
     public void DisableFog()

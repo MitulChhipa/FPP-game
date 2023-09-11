@@ -20,7 +20,7 @@ Material:
   - EFFECT_REFLECTION
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -157,8 +157,8 @@ Material:
     m_Floats:
     - _Albedo2Flow: 0.3
     - _Albedo2Tiling: 0.9
-    - _AlbedoContrast: 1.4
-    - _AlbedoIntensity: 2.55
+    - _AlbedoContrast: 0.8
+    - _AlbedoIntensity: 0.22
     - _Brightness: 1
     - _BumpScale: 1
     - _Contrast: 1
