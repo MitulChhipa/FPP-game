@@ -16,6 +16,8 @@ public class playerMovementCC : MonoBehaviour
     [SerializeField] private AudioSource _jumpAudio;
     [SerializeField] private AudioSource _dropAudio;
 
+
+    private float _noFoodWaterHealthChange = -5f;
     private float _y, _playerSpeed;
     private Vector3 _localDirection = new Vector3();
     private Vector3 _inputDirection = new Vector3();
@@ -168,7 +170,7 @@ public class playerMovementCC : MonoBehaviour
 
         if (_ph.water <= 0 || _ph.food <= 0)
         {
-            _ph.changeHealth(-5);
+            _ph.changeHealth(-5f);
         }
         else
         {

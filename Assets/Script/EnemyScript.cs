@@ -14,7 +14,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private float _enemySpeed;
     [SerializeField] private EnemyManager _enemyManager;
     [SerializeField] private float _respawnTime;
-    [SerializeField]private float _enemyHealth = 100;
+    [SerializeField] private float _enemyHealth = 100;
 
     public NavMeshAgent agent;
     public bool _dead = false;
@@ -96,7 +96,7 @@ public class EnemyScript : MonoBehaviour
     {
         if (distance < 2f)
         {
-            _hp.changeHealth(-10);
+            _hp.changeHealth(-25f);
         }
     }
 

@@ -2234,6 +2234,7 @@ MonoBehaviour:
   _enemyManager: {fileID: 0}
   _respawnTime: 300
   _enemyHealth: 100
+  _attackDamage: 30
   agent: {fileID: 2942496569866975795}
   _dead: 0
   sampleTransform: {fileID: 0}
