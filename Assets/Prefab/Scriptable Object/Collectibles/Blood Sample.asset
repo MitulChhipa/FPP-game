@@ -15,7 +15,7 @@ MonoBehaviour:
   type: 3
   image: {fileID: 21300000, guid: 783598599dffc2e4ebe880cd090840d6, type: 3}
   description: It is used to create vaccine.
-  itemName: Infected Blood Sample
+  itemName: Infected Blood Sample Variant
   restoreHealth: 0
   restoreFood: 0
   restoreStamina: 0

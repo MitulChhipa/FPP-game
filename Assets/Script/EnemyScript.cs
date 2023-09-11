@@ -11,7 +11,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private SpriteRenderer _mapSprite;
     [SerializeField] private EnemySoundManager _enemySoundManager;
     [SerializeField] private GameObject _bloodSamplePrefab;
-    
+    [SerializeField] private float _enemySpeed;
     [SerializeField] private EnemyManager _enemyManager;
     [SerializeField] private float _respawnTime;
     [SerializeField]private float _enemyHealth = 100;
@@ -25,8 +25,6 @@ public class EnemyScript : MonoBehaviour
     float distance;
     private GameObject _player;
     private PlayerHealth _hp;
-    private bool _walking;
-    private bool _isAttacking;
     private float _walkTimer;
     private GameObject _bloodSample;
 
@@ -59,7 +57,7 @@ public class EnemyScript : MonoBehaviour
 
         if (_enemyHealth <= 0)
         {
-            OnDead();
+            Dead();
         }
     }
 
@@ -68,7 +66,7 @@ public class EnemyScript : MonoBehaviour
         distance = Vector3.Distance(transform.position, _playerPos.position);
         if ((distance < 30f || _hit) && _enemyHealth > 0)
         {
-            agent.speed = 7f;
+            agent.speed = _enemySpeed;
             agent.SetDestination(_playerPos.position);
         }
         else
@@ -96,13 +94,13 @@ public class EnemyScript : MonoBehaviour
 
     public void DealDamage()
     {
-        if (distance < 1.5f)
+        if (distance < 2f)
         {
             _hp.changeHealth(-10);
         }
     }
 
-    private void OnDead()
+    private void Dead()
     {
         agent.isStopped = true;
         _dead = true;
@@ -113,7 +111,7 @@ public class EnemyScript : MonoBehaviour
         _enemySoundManager.StopAllSound();
         Invoke("ResetAndRespawn", _respawnTime);
         DropItem();
-        Invoke("DeactivatingEnemy", 5f);
+        Invoke("DeactivatingEnemy", 20f);
     }
     private void DeactivatingEnemy()
     {
@@ -128,8 +126,6 @@ public class EnemyScript : MonoBehaviour
         _enemyHealth = 100;
         _hit = false;
         distance = 0f;
-        _walking = false;
-        _isAttacking = false;
         _ragdollController.DeactiveRagDoll();
         _animator.enabled = true;
         _mapSprite.color = Color.red;
@@ -152,9 +148,16 @@ public class EnemyScript : MonoBehaviour
 
     private void DropItem()
     {
-        //Instantiate(_bloodSample, transform.position, Quaternion.identity);
-        _bloodSample.transform.position = transform.position;
-        _bloodSample.SetActive(true);
+        int x = Random.Range(0,10);
+        switch (x)
+        {
+            case 0:
+                _bloodSample.transform.position = transform.position;
+                _bloodSample.SetActive(true);
+                break;
+            default: 
+                break;
+        }
     }
 }
 

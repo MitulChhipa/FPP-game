@@ -9,7 +9,7 @@ public enum itemType
     Collectible
 }
 
-public abstract class Items : ScriptableObject
+public class Items : ScriptableObject
 {
     public itemType type;
     public Sprite image;

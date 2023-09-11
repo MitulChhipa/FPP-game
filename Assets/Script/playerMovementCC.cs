@@ -172,8 +172,8 @@ public class playerMovementCC : MonoBehaviour
         }
         else
         {
-            _ph.changeWater(-0.1f);
-            _ph.changeFood(-0.1f);
+            _ph.changeWater(-0.5f);
+            _ph.changeFood(-0.5f);
         }
 
         if ( _ph.stamina > 0)

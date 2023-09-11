@@ -463,6 +463,7 @@ MonoBehaviour:
   _mapSprite: {fileID: 950979059536536350}
   _enemySoundManager: {fileID: 8854622248943783386}
   _bloodSamplePrefab: {fileID: 6820990289962108480, guid: 6640da71e5bcf664a8ef0a5d68142999, type: 3}
+  _enemySpeed: 11
   _enemyManager: {fileID: 0}
   _respawnTime: 300
   _enemyHealth: 100

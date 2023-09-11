@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class DataManager : MonoBehaviour
 {
@@ -44,10 +42,13 @@ public class DataManager : MonoBehaviour
         string json = JsonUtility.ToJson(dataHandle,true);
         File.WriteAllText(Application.dataPath + "/DataFile.json", json);
 
-        //string jsonInventory = JsonUtility.ToJson(inventoryController._inventoryJS,true);
-        //File.WriteAllText(Application.dataPath + "/Inventory.json", jsonInventory);
-
         inventoryController.SaveCurrentInventory();
+
+        //string invenotoryAsJson = JsonConvert.SerializeObject(Inventory, Formatting.Indented, new JsonSerializerSettings
+        //{
+        //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        //});
+        //File.WriteAllText(Application.dataPath + "/Inventory.json", invenotoryAsJson);
     }
 
     public void LoadData()
@@ -72,29 +73,12 @@ public class DataManager : MonoBehaviour
         Invoke("ResumePlayer", 0.5f);
         inventoryController.LoadSavedGameInventory();
         _collectibles.ResetCollectibles();
+
+
+        //string invenotoryAsJson = File.ReadAllText(Application.dataPath + "/Inventory.json");
+        //Inventory = JsonConvert.DeserializeObject<Inventory>(invenotoryAsJson);
     }
-    //public void NewGameLoad()
-    //{
-    //    playerMovementCC.enabled = false;
-    //    string json = File.ReadAllText(Application.dataPath + "/NewGameDataFile.json");
-    //    DataHandle dataHandle = JsonUtility.FromJson<DataHandle>(json);
-
-    //    hp.health = dataHandle.health;
-    //    hp.water = dataHandle.waterLevel;
-    //    hp.food = dataHandle.foodLevel;
-    //    hp.stamina = 100f;
-
-    //    player.position = dataHandle.position;
-    //    player.rotation = dataHandle.rotation;
-    //    m4.totalAmmo = dataHandle.totalM4Ammo;
-    //    pistol.totalAmmo = dataHandle.totalPistolAmmo;
-    //    pistol.currentAmmo = dataHandle.pistolAmmo;
-    //    m4.currentAmmo = dataHandle.m4Ammo;
-    //    research.ResetValues(dataHandle.researchDataValue);
-    //    hp.UpdateAllHpUi();
-    //    weaponManager.UpdateCurrentWeaponUI();
-    //    Invoke("ResumePlayer", 0.5f);
-    //}
+    
     public void StartNewGame()
     {
         playerMovementCC.enabled = false;

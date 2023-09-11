@@ -1,4 +1,5 @@
-using Unity.VisualScripting;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class inventoryController : MonoBehaviour
@@ -12,22 +13,18 @@ public class inventoryController : MonoBehaviour
     [SerializeField] private GameObject _inventoryContainer;
     [SerializeField] private GameObject _itemContainer;
     [SerializeField] private PlayerHealth _hp;
+    [SerializeField] private WeaponManager _weaponManager;
+    [SerializeField] private AudioSource _itemUse;
+    [SerializeField] private AudioSource _itemPick;
 
-    public InventoryJS _inventoryJS;
 
     private bool _isOpened;
     private Ray _ray;
     private RaycastHit _hit;
 
-    public Slot[] inventory;
 
     private void Start()
     {
-        //inventory = new Slot[_currentInventory.inventoryContainer.Count];
-        //for(int i = 0; i < _currentInventory.inventoryContainer.Count; i++)
-        //{
-        //    inventory[i].SetValuesSlot(_currentInventory.inventoryContainer[i]);
-        //} 
         _inventoryPanel.SetActive(false);
     }
 
@@ -39,19 +36,12 @@ public class inventoryController : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Q) && !_isOpened)
         {
-            _inventoryPanel.SetActive(true);
-            _isOpened = true;
-            Cursor.lockState = CursorLockMode.Confined;
             OpenInventory();
         }
         else if(Input.GetKeyDown(KeyCode.Q) && _isOpened)
         {
-            _inventoryPanel.SetActive(false);
-            _isOpened = false;
-            Cursor.lockState = CursorLockMode.Locked;
             CloseInventory();
         }
-        UseItem();
     }
 
     private void targettingCollectibles()
@@ -66,6 +56,7 @@ public class inventoryController : MonoBehaviour
                     var item = _hit.collider.gameObject.GetComponent<itemScript>().item;
                     _currentInventory.addItem(item, 1);
                     _hit.collider.gameObject.SetActive(false);
+                    _itemPick.Play();
                     break;
                 case "Computer":
                     researchScript _researchScript = _hit.collider.gameObject.GetComponent<researchScript>();
@@ -77,6 +68,12 @@ public class inventoryController : MonoBehaviour
 
     private void OpenInventory()
     {
+        _inventoryPanel.SetActive(true);
+        _isOpened = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        _weaponManager.deactivationAllWeapons();
+        _weaponManager.enabled = false;
+
         for (int i = 0; i < _currentInventory.inventoryContainer.Count;i++)
         {
             var Ui = Instantiate(_itemContainer, _inventoryContainer.transform);
@@ -89,35 +86,17 @@ public class inventoryController : MonoBehaviour
         }
     }
 
-    private void CloseInventory()
+    public void CloseInventory()
     {
+        _inventoryPanel.SetActive(false);
+        _isOpened = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        _weaponManager.ActivateWeapon();
+        _weaponManager.enabled = true;
+
         foreach (Transform child in _inventoryContainer.transform) 
         {
-            Destroy(child.gameObject); 
-        }
-    }
-    private void UseItem()
-    {
-        switch (Input.inputString)
-        {
-            case "1":
-                ApplyItemEffect(0);
-                break;
-            case "2":
-                ApplyItemEffect(1);
-                break;
-            case "3":
-                ApplyItemEffect(2);
-                break;
-            case "4":
-                ApplyItemEffect(3);
-                break;
-            case "5":
-                ApplyItemEffect(4);
-                break;
-            case "6":
-                ApplyItemEffect(5);
-                break;
+            Destroy(child.gameObject);
         }
     }
 
@@ -127,7 +106,7 @@ public class inventoryController : MonoBehaviour
         {
             return;
         }
-
+        _itemUse.Play();
         float healthBoost = _currentInventory.inventoryContainer[range].item.restoreHealth;
         float staminaBoost = _currentInventory.inventoryContainer[range].item.restoreStamina;
         float foodBoost = _currentInventory.inventoryContainer[range].item.restoreFood;
@@ -181,7 +160,7 @@ public class inventoryController : MonoBehaviour
     public void SaveCurrentInventory()
     {
         CopyInventory(ref _savedInventory, _currentInventory);
-        
+        AssetDatabase.SaveAssets();
     }
 
     private void CopyInventory(ref Inventory to,Inventory from)

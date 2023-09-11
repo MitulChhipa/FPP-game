@@ -23,6 +23,11 @@ public class Slot
     public ItemJS itemJS;
     public int amount;
 
+    public void ChangeAmount(int itemAmount)
+    {
+        amount += itemAmount;
+    }
+
     public void SetValuesSlot(in InventorySlot x)
     {
         itemJS.SetValuesItem(in x.item);
