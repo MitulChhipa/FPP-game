@@ -1,6 +1,7 @@
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 public class DataManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class DataManager : MonoBehaviour
     public inventoryController inventoryController;
     public Inventory Inventory;
     [SerializeField] private CollectiblesScript _collectibles;
+    [SerializeField] private Inventory new1;
 
 
     public void SaveData()
@@ -68,8 +70,12 @@ public class DataManager : MonoBehaviour
         _collectibles.ResetCollectibles();
 
 
-        string invenotoryAsJson = File.ReadAllText(Application.persistentDataPath + "/Inventory.json");
-        Inventory = JsonConvert.DeserializeObject<Inventory>(invenotoryAsJson);
+        //string invenotoryAsJson = File.ReadAllText(Application.persistentDataPath + "/Inventory.json");
+        //new1 = JsonConvert.DeserializeObject<Inventory>(invenotoryAsJson, new JsonSerializerSettings
+        //{
+        //    NullValueHandling = NullValueHandling.Ignore
+        //});
+
     }
     
     public void StartNewGame()

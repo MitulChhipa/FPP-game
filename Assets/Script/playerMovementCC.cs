@@ -45,6 +45,7 @@ public class playerMovementCC : MonoBehaviour
             timeFunction();
             _timer= 0;
         }
+        crouch();
     }
 
     private void LateUpdate()
@@ -65,6 +66,18 @@ public class playerMovementCC : MonoBehaviour
         else
         {
             _isSwimming = false;
+        }
+    }
+
+    private void crouch()
+    {
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            _controller.height = 0.7f;
+        }
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            _controller.height = 1.6f;
         }
     }
 
