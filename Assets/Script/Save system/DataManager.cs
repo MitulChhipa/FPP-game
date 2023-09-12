@@ -16,7 +16,6 @@ public class DataManager : MonoBehaviour
     public inventoryController inventoryController;
     public Inventory Inventory;
     [SerializeField] private CollectiblesScript _collectibles;
-    [SerializeField] private Inventory new1;
 
 
     public void SaveData()
