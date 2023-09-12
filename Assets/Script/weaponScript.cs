@@ -15,7 +15,6 @@ public class weaponScript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _ammoCount;
     [SerializeField] private TextMeshProUGUI _totalAmmoCount;
     [SerializeField] private Animator _animator;
-    [SerializeField] private Animator _noPostCamAnimator;
     [SerializeField] private Animator _fireArmAnimator;
     [SerializeField] private cameraScript _cameraScript;
     [SerializeField] private GameObject _crossHair;
@@ -125,7 +124,6 @@ public class weaponScript : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && !_weaponManager.reloading /*&& !_weaponManager.scope*/ && weaponScriptable.type == itemType.ShootingWeapon)
         {
             _fireArmAnimator.SetBool("Scope", true);
-            _noPostCamAnimator.SetBool("Scope", true);
             _animator.SetBool("Scope", true);
             _weaponManager.scope = true;
             _crossHair.SetActive(false);
@@ -133,7 +131,6 @@ public class weaponScript : MonoBehaviour
         else if (Input.GetMouseButtonUp(1) && _weaponManager.scope)
         {
             _fireArmAnimator.SetBool("Scope", false);
-            _noPostCamAnimator.SetBool("Scope", false);
             _animator.SetBool("Scope", false);
             _weaponManager.scope = false;
             _crossHair.SetActive(true);

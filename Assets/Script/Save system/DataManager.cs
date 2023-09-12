@@ -16,13 +16,6 @@ public class DataManager : MonoBehaviour
     public Inventory Inventory;
     [SerializeField] private CollectiblesScript _collectibles;
 
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.N))
-        {
-            NewGameData();
-        }
-    }
 
     public void SaveData()
     {
@@ -40,21 +33,21 @@ public class DataManager : MonoBehaviour
         dataHandle.m4Ammo = m4.currentAmmo;
 
         string json = JsonUtility.ToJson(dataHandle,true);
-        File.WriteAllText(Application.dataPath + "/DataFile.json", json);
+        File.WriteAllText(Application.persistentDataPath + "/DataFile.json", json);
 
         inventoryController.SaveCurrentInventory();
 
-        //string invenotoryAsJson = JsonConvert.SerializeObject(Inventory, Formatting.Indented, new JsonSerializerSettings
-        //{
-        //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        //});
-        //File.WriteAllText(Application.dataPath + "/Inventory.json", invenotoryAsJson);
+        string invenotoryAsJson = JsonConvert.SerializeObject(Inventory, Formatting.Indented, new JsonSerializerSettings
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        });
+        File.WriteAllText(Application.persistentDataPath + "/Inventory.json", invenotoryAsJson);
     }
 
     public void LoadData()
     {
         playerMovementCC.enabled = false;
-        string json = File.ReadAllText(Application.dataPath + "/DataFile.json");
+        string json = File.ReadAllText(Application.persistentDataPath + "/DataFile.json");
         DataHandle dataHandle = JsonUtility.FromJson<DataHandle>(json);
 
         hp.health = dataHandle.health;
@@ -75,8 +68,8 @@ public class DataManager : MonoBehaviour
         _collectibles.ResetCollectibles();
 
 
-        //string invenotoryAsJson = File.ReadAllText(Application.dataPath + "/Inventory.json");
-        //Inventory = JsonConvert.DeserializeObject<Inventory>(invenotoryAsJson);
+        string invenotoryAsJson = File.ReadAllText(Application.persistentDataPath + "/Inventory.json");
+        Inventory = JsonConvert.DeserializeObject<Inventory>(invenotoryAsJson);
     }
     
     public void StartNewGame()
@@ -98,25 +91,6 @@ public class DataManager : MonoBehaviour
         Invoke("ResumePlayer", 0.5f);
         inventoryController.LoadNewGameInventory();
         _collectibles.ResetCollectibles();
-    }
-
-    void NewGameData()
-    {
-        DataHandle dataHandle = new DataHandle();
-        dataHandle.health = 100f;
-        dataHandle.waterLevel = 100f;
-        dataHandle.foodLevel = 100f;
-        dataHandle.position = player.position;
-        dataHandle.rotation = player.rotation;
-
-        dataHandle.totalPistolAmmo = pistol.totalAmmo;
-        dataHandle.totalM4Ammo = m4.totalAmmo;
-        dataHandle.researchDataValue = research.informationValue;
-        dataHandle.pistolAmmo = pistol.currentAmmo;
-        dataHandle.m4Ammo = m4.currentAmmo;
-
-        string json = JsonUtility.ToJson(dataHandle, true);
-        File.WriteAllText(Application.dataPath + "/NewGameDataFile.json", json);
     }
 
     private void ResumePlayer()
