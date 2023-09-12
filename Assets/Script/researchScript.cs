@@ -9,6 +9,7 @@ public class researchScript : MonoBehaviour
     [SerializeField] private Image _loadingBar;
     public float informationValue;
     private float _targetInformationValue;
+    private float _timeMultiplier = 10f;
     [SerializeField] private MenuManager _menuManager;
 
     private void Start()
@@ -26,7 +27,7 @@ public class researchScript : MonoBehaviour
 
         if (informationValue != _targetInformationValue)
         {
-            informationValue += Time.deltaTime;
+            informationValue += Time.deltaTime * _timeMultiplier;
             UpdateLoadingBar();
         }
     }
