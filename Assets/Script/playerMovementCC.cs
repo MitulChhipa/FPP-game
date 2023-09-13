@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class playerMovementCC : MonoBehaviour
@@ -26,7 +23,7 @@ public class playerMovementCC : MonoBehaviour
     private float _timer;
     private bool _isSwimming;
 
-
+    #region MonoFunctions
     private void Start()
     {
         //_state = playerState.idle;
@@ -39,13 +36,14 @@ public class playerMovementCC : MonoBehaviour
         inputStates();
         movement();
         jump();
+        crouch();
+        
         _timer = _timer + Time.deltaTime;
         if(_timer >=1)
         {
-            timeFunction();
+            HealthFunction();
             _timer= 0;
         }
-        crouch();
     }
 
     private void LateUpdate()
@@ -68,25 +66,52 @@ public class playerMovementCC : MonoBehaviour
             _isSwimming = false;
         }
     }
+    #endregion
 
-    private void crouch()
+    #region Inputs
+    private void inputStates()
     {
-        if(Input.GetKeyDown(KeyCode.C))
+        _y = Input.GetAxis("Mouse X");
+        _crouch = Input.GetKey(KeyCode.C);
+        _actionInput = Input.GetKey(KeyCode.E);
+       
+        _inputDirection.x = Input.GetAxis("Horizontal");
+        _inputDirection.z = Input.GetAxis("Vertical");
+
+        _isWalking = _inputDirection.x != 0 || _inputDirection.z != 0;
+        _jump = Input.GetKeyDown(KeyCode.Space);
+        _shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
+        //Setting speed of the player
+        if(_isSwimming)
         {
-            _controller.height = 0.7f;
+            _playerSpeed = _swimSpeed;
         }
-        if (Input.GetKeyUp(KeyCode.C))
+        else
         {
-            _controller.height = 1.6f;
+            if (_shift && _ph.canRun)
+            {
+                _playerSpeed = _sprintSpeed;
+                _isRunning = true;
+            }
+            else
+            {
+                _playerSpeed = _walkSpeed;
+                _isRunning = false;
+            }
         }
     }
+    #endregion
+
+    #region Movement
 
     private void movement()
     {
         _localDirection = transform.TransformDirection(_inputDirection);
         _localDirection.Normalize();
         _controller.Move((_localDirection * _playerSpeed + _gravity) * Time.deltaTime);
-        if(_localDirection.sqrMagnitude > 0 && _controller.isGrounded)
+        
+        if(_localDirection.sqrMagnitude > 0 && _controller.isGrounded && !_isSwimming)
         {
             _movementAnimator.SetBool("Movement", true);
             _movementAnimator.SetFloat("Blend", _playerSpeed / _sprintSpeed);
@@ -107,44 +132,9 @@ public class playerMovementCC : MonoBehaviour
         }
     }
 
-    private void inputStates()
-    {
-        _y = Input.GetAxis("Mouse X");
-        _crouch = Input.GetKey(KeyCode.C);
-        _actionInput = Input.GetKey(KeyCode.E);
-       
-        _inputDirection.x = Input.GetAxis("Horizontal");
-        _inputDirection.z = Input.GetAxis("Vertical");
-
-
-        _isWalking = _inputDirection.x != 0 || _inputDirection.z != 0;
-        _jump = Input.GetKeyDown(KeyCode.Space);
-        _shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-
-
-        if(_isSwimming)
-        {
-            _playerSpeed = _swimSpeed;
-        }
-        else
-        {
-            if (_shift && _ph.canRun)
-            {
-                _playerSpeed = _sprintSpeed;
-                _isRunning = true;
-            }
-            else
-            {
-                _playerSpeed = _walkSpeed;
-                _isRunning = false;
-            }
-        }
-    }
-
     private void cameraRotation()
     {
         transform.Rotate(0, _y * Time.deltaTime * _rotationSpeed, 0);
-        
     }
 
     private void jump()
@@ -170,27 +160,35 @@ public class playerMovementCC : MonoBehaviour
         }
     }
 
-    private void timeFunction()
+    private void crouch()
     {
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            _controller.height = 0.7f;
+        }
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            _controller.height = 1.6f;
+        }
+    }
+    #endregion
+
+    #region Health
+    private void HealthFunction()
+    {
+        //Water level and Food level decrease with time
+        _ph.changeWater(-0.5f);
+        _ph.changeFood(-0.5f);
+
+        //Stamina functionality
         if (_isRunning && _ph.stamina > 0)
         {
             _ph.changeStamina(-10);
         }
-        else if(!_isWalking && !_shift && !_isRunning && _ph.stamina < 100)
+        else if(!_isWalking && !_isRunning)
         {
             _ph.changeStamina(20);
         }
-
-        if (_ph.water <= 0 || _ph.food <= 0)
-        {
-            _ph.changeHealth(-5f);
-        }
-        else
-        {
-            _ph.changeWater(-0.5f);
-            _ph.changeFood(-0.5f);
-        }
-
         if ( _ph.stamina > 0)
         {
             _ph.canRun = true;
@@ -199,8 +197,16 @@ public class playerMovementCC : MonoBehaviour
         {
             _ph.canRun = false;
         }
-    }
 
+        //Health decrease when Water OR Food level is 0
+        if (_ph.water <= 0 || _ph.food <= 0)
+        {
+            _ph.changeHealth(-5f);
+        }
+    }
+    #endregion
+
+    #region Sound
     private void WalkSound()
     {
         if (_runAudio.isPlaying)
@@ -224,4 +230,5 @@ public class playerMovementCC : MonoBehaviour
         }
         _runAudio.Play();
     }
+    #endregion
 }

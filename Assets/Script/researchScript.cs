@@ -1,17 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class researchScript : MonoBehaviour
 {
+
     [SerializeField] private Text _loadingPercent;
     [SerializeField] private Image _loadingBar;
-    public float informationValue;
+    [SerializeField] private MenuManager _menuManager;
     private float _targetInformationValue;
     private float _timeMultiplier = 10f;
-    [SerializeField] private MenuManager _menuManager;
+    public float informationValue;
 
+
+    #region Mono
     private void Start()
     {
         UpdateLoadingBar();
@@ -31,7 +32,9 @@ public class researchScript : MonoBehaviour
             UpdateLoadingBar();
         }
     }
+    #endregion
 
+    #region VariableRelatedFuntions
     public void UpdateInformationData(float x)
     {
         _targetInformationValue += x;
@@ -39,6 +42,15 @@ public class researchScript : MonoBehaviour
         UpdateLoadingBar();
     }
 
+    public void ResetValues(float x)
+    {
+        _targetInformationValue = x;
+        informationValue = x;
+        UpdateLoadingBar();
+    }
+    #endregion
+
+    #region UIFuntions
     public void UpdateLoadingBar()
     {
         _loadingBar.fillAmount = informationValue/100;
@@ -48,10 +60,5 @@ public class researchScript : MonoBehaviour
             _menuManager.Win();
         }
     }
-    public void ResetValues(float x)
-    {
-        _targetInformationValue = x;
-        informationValue = x;
-        UpdateLoadingBar();
-    }
+    #endregion
 }

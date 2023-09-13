@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CollectiblesScript : MonoBehaviour
 {
+    [SerializeField] private Transform _collectiblesParent;
     [SerializeField] private GameObject[] _collectiblesPrefab;
     [SerializeField] private Transform[] _collectiblesTransform;
     private GameObject[] _collectiblesPool;
-    [SerializeField] private Transform _parent;
 
 
     private void Start()
@@ -23,7 +21,7 @@ public class CollectiblesScript : MonoBehaviour
         for(int i = 0;i < _collectiblesTransform.Length;i++)
         {
             _randomRange = Random.Range(0,_range);
-            _collectiblesPool[i] = Instantiate(_collectiblesPrefab[_randomRange], _collectiblesTransform[i].position, _collectiblesTransform[i].rotation,_parent);
+            _collectiblesPool[i] = Instantiate(_collectiblesPrefab[_randomRange], _collectiblesTransform[i].position, _collectiblesTransform[i].rotation, _collectiblesParent);
         }
     }
 

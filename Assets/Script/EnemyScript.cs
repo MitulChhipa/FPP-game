@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyScript : MonoBehaviour
 {
+
     [SerializeField] private Transform _playerPos;
     [SerializeField] private ragdollController _ragdollController;
     [SerializeField] private Animator _animator;
@@ -21,13 +22,15 @@ public class EnemyScript : MonoBehaviour
     public Transform sampleTransform;
 
     private Collider _collider;
-    bool _hit = false;
-    float distance;
+    private bool _hit = false;
+    private float distance;
     private GameObject _player;
     private PlayerHealth _hp;
     private float _walkTimer;
     private GameObject _bloodSample;
 
+
+    #region MonoFunctions
     private void Start()
     {
         _bloodSample = Instantiate(_bloodSamplePrefab,sampleTransform);
@@ -49,18 +52,9 @@ public class EnemyScript : MonoBehaviour
         checkDestination();
         checkSpeed();
     }
+    #endregion
 
-    public void bulletHit(float _damage)
-    {
-        DecreaseHealth(_damage);
-        _hit = true;
-
-        if (_enemyHealth <= 0)
-        {
-            Dead();
-        }
-    }
-
+    #region MovementAndBehaviors
     private void checkDestination()
     {
         distance = Vector3.Distance(transform.position, _playerPos.position);
@@ -83,15 +77,43 @@ public class EnemyScript : MonoBehaviour
             _animator.SetBool("IsAttacking", false);
         }
     }
+    private void FreeRoaming()
+    {
+        agent.speed = 1f;
+        _walkTimer += Time.deltaTime;
+        if (_walkTimer > 20f)
+        {
+            _walkTimer = 0;
+            agent.SetDestination(_enemyManager.RandomPosition());
+        }
+    }
     private void checkSpeed()
     {
         _animator.SetFloat("Movement", agent.velocity.magnitude/7f);
     }
+    #endregion
+
+    #region InteractionBehaviors
+    //hit with weapon
+    public void bulletHit(float _damage)
+    {
+        DecreaseHealth(_damage);
+        _hit = true;
+
+        if (_enemyHealth <= 0)
+        {
+            Dead();
+        }
+    }
+
+    //Damage to this enemy
     public void DecreaseHealth(float _damage)
     {
         _enemyHealth = _enemyHealth - _damage;
     }
 
+
+    //Damage to player
     public void DealDamage()
     {
         if (distance < 2f)
@@ -99,7 +121,9 @@ public class EnemyScript : MonoBehaviour
             _hp.changeHealth(-25f);
         }
     }
+    #endregion
 
+    #region EnemyDeathBehaviors
     private void Dead()
     {
         agent.isStopped = true;
@@ -135,16 +159,6 @@ public class EnemyScript : MonoBehaviour
         _walkTimer = 0;
     }
 
-    private void FreeRoaming()
-    {
-        agent.speed = 1f;
-        _walkTimer += Time.deltaTime;
-        if (_walkTimer > 20f)
-        {
-            _walkTimer = 0;
-            agent.SetDestination(_enemyManager.RandomPosition());
-        }
-    }
 
     private void DropItem()
     {
@@ -162,6 +176,7 @@ public class EnemyScript : MonoBehaviour
         _bloodSample.transform.position = transform.position;
         _bloodSample.SetActive(true);
     }
+    #endregion
 }
 
 

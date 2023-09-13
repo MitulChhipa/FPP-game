@@ -1,19 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class ragdollController : MonoBehaviour
 {
+
     [SerializeField] private Rigidbody[] rbArray;
     [SerializeField] private Collider[] colliders;
     [SerializeField] private EnemyScript _enemyScript;
-    [SerializeField] private NavMeshAgent _agent;
+
 
     private void Start()
     {
         DeactiveRagDoll();
     }
+
+
+    #region RagdollFuncions
     public void activeRagDoll()
     {
         for (int i = 0; i < rbArray.Length; i++)
@@ -30,6 +33,9 @@ public class ragdollController : MonoBehaviour
             colliders[i].enabled = false;
         }
     }
+    #endregion
+
+    #region AnimationTriggers
     public void ApplyDamage()
     {
         _enemyScript.DealDamage();
@@ -39,9 +45,11 @@ public class ragdollController : MonoBehaviour
     {
         _enemyScript.agent.isStopped = true;
     }
+
     public void ResumeAgent()
     {
         _enemyScript.agent.isStopped = false;
     }
+    #endregion
 
 }

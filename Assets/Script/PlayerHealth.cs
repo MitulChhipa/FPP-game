@@ -1,6 +1,5 @@
 using UnityEngine.UI;
 using UnityEngine;
-using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -20,7 +19,7 @@ public class PlayerHealth : MonoBehaviour
     public float food = 100f;
 
 
-
+    #region MonoFuntions
     private void Start()
     {
         updateUIBar(_health,health);
@@ -28,10 +27,9 @@ public class PlayerHealth : MonoBehaviour
         updateUIBar(_stamina, stamina);
         updateUIBar(_food, food);
     }
+    #endregion
 
-
-
-
+    #region HealthChangeFuntions
     public void changeHealth(float valueChange)
     {
         if (!_menuManager.canActiveMenu)
@@ -68,7 +66,9 @@ public class PlayerHealth : MonoBehaviour
         x = Mathf.Clamp(x, 0f, 100f);
         updateUIBar(ui,x);
     }
+    #endregion
 
+    #region UIUpdateFunctions
     public void updateUIBar(Image i, float value)
     {
         i.fillAmount = value / 100;
@@ -81,4 +81,5 @@ public class PlayerHealth : MonoBehaviour
         updateUIBar(_stamina, stamina);
         updateUIBar(_food, food);
     }
+    #endregion
 }

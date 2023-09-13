@@ -16,19 +16,19 @@ public class cameraScript : MonoBehaviour
     private bool _torchOn = false;
     private Vector3 _rotation;
     private float _x;
+
+
     private void Start()
     {
         _rotation = _camera.rotation.eulerAngles;
         _torch.SetActive(false);
     }
-
     private void Update()
     {
         _x = Input.GetAxis("Mouse Y");
 
 
         _rotation.x = _rotation.x - _x;
-        
         _rotation.x = Mathf.Clamp(_rotation.x, -60, 60);
         _rotation.y = _player.rotation.eulerAngles.y;
         _rotation.z = _camera.rotation.eulerAngles.z;
@@ -36,14 +36,14 @@ public class cameraScript : MonoBehaviour
         if (!_torchOn && Input.GetKeyDown(KeyCode.T))
         {
             _torchOn = true;
-            _torchImage.color = Color.white;
             _torch.SetActive(true);
+            _torchImage.color = Color.white;
         }
         else if(_torchOn && Input.GetKeyDown(KeyCode.T))
         {
-            _torchImage.color = Color.black;
-            _torch.SetActive(false);
             _torchOn = false;
+            _torch.SetActive(false);
+            _torchImage.color = Color.black;
         }
     }
     private void LateUpdate()

@@ -22,7 +22,7 @@ public class inventoryController : MonoBehaviour
     private Ray _ray;
     private RaycastHit _hit;
 
-
+    #region Mono
     private void Start()
     {
         _inventoryPanel.SetActive(false);
@@ -43,7 +43,9 @@ public class inventoryController : MonoBehaviour
             CloseInventory();
         }
     }
+    #endregion
 
+    #region UseInventory
     private void targettingCollectibles()
     {
         _ray.origin = _raycastTargetOrigin.position;
@@ -99,7 +101,14 @@ public class inventoryController : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
+    private void ResetInventory()
+    {
+        CloseInventory();
+        OpenInventory();
+    }
+    #endregion
 
+    #region ItemFuntions
     public void ApplyItemEffect(int range)
     {
         if (range >= _currentInventory.inventoryContainer.Count || _currentInventory.inventoryContainer[range].item.type != itemType.Consumable)
@@ -129,11 +138,6 @@ public class inventoryController : MonoBehaviour
             ResetInventory();
         }
     }
-    private void ResetInventory()
-    {
-        CloseInventory();
-        OpenInventory();
-    }
     
     private void UseCollectibles(ref researchScript x)
     {
@@ -147,7 +151,9 @@ public class inventoryController : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region ChangeInventoryData
     public void LoadNewGameInventory()
     {
         CopyInventory(ref _currentInventory, _baseInventory);
@@ -170,4 +176,5 @@ public class inventoryController : MonoBehaviour
             to.addItem(from.inventoryContainer[i].item, from.inventoryContainer[i].amount);
         }
     }
+    #endregion
 }

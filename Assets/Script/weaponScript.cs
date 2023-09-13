@@ -1,16 +1,13 @@
-﻿using System.Threading;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class weaponScript : MonoBehaviour
 {
+
     [SerializeField] private Transform _raycastTargetOrigin;
     [SerializeField] private ParticleSystem _muzzleFlash;
     [SerializeField] private ParticleSystem _fireImpact;
     [SerializeField] private ParticleSystem _fleshImpact;
-    [SerializeField] private float _fireRate;
-    [SerializeField] private float _fireRange;
     [SerializeField] private AudioSource _fireSound;
     [SerializeField] private TextMeshProUGUI _ammoCount;
     [SerializeField] private TextMeshProUGUI _totalAmmoCount;
@@ -23,23 +20,17 @@ public class weaponScript : MonoBehaviour
     
     public WeaponScriptable weaponScriptable;
 
-    //private int _totalAmmo;
-    private int _maxAmmo;
     private Ray _ray;
     private RaycastHit _hit;
     private bool _isFiring;
     private float _firingTime = 0f;
-    //private bool _reloading = false;
-    private float _damage;
-    //public int _magAmmo;
 
+
+    #region Mono
     private void Start()
     {
-        SettingValues();
-        //_magAmmo = _maxAmmo;
         UpdateAmmo();
         _totalAmmoCount.text = weaponScriptable.totalAmmo.ToString();
-        
     }
 
     private void Update()
@@ -53,19 +44,21 @@ public class weaponScript : MonoBehaviour
         if (_isFiring && !_weaponManager.reloading)
         {
             _firingTime = _firingTime + Time.deltaTime;
-            if(_firingTime > _fireRate)
+            if(_firingTime > weaponScriptable.fireTime)
             {
                 startFire();
             }
         }
         
-        if (Input.GetKeyDown(KeyCode.R) && !_weaponManager.reloading && (weaponScriptable.currentAmmo <_maxAmmo) && (weaponScriptable.totalAmmo != 0))
+        if (Input.GetKeyDown(KeyCode.R) && !_weaponManager.reloading && (weaponScriptable.currentAmmo <weaponScriptable.totalAmmo) && (weaponScriptable.totalAmmo != 0))
         {
             reload();
         }
         cameraScope();
     }
+    #endregion
 
+    #region Fire
     private void startFire()
     {
         _firingTime = 0;
@@ -79,75 +72,6 @@ public class weaponScript : MonoBehaviour
                 break;
         }
     }
-
-    private void reload()
-    {
-        _weaponManager.reloading = true;
-        _weaponManager.scope = false;
-
-        _crossHair.SetActive(true);
-        _fireArmAnimator.SetBool("Scope", false);
-        _animator.SetBool("Scope", false);
-        _animator.ResetTrigger("Shoot 0");
-        _animator.ResetTrigger("Shoot 1");
-        _fireArmAnimator.SetTrigger("Reload");
-        _fireArmAnimator.ResetTrigger("Shoot");
-
-        Invoke("stopReload", weaponScriptable.reloadTime);
-    }
-
-    private void stopReload()
-    {
-        if(weaponScriptable.totalAmmo > 0)
-        {
-            int temp;
-            temp = _maxAmmo - weaponScriptable.currentAmmo;
-            if (temp <= weaponScriptable.totalAmmo)
-            {
-                weaponScriptable.currentAmmo = weaponScriptable.currentAmmo + temp;
-                weaponScriptable.totalAmmo -= temp;
-            }
-            else
-            {
-                weaponScriptable.currentAmmo = weaponScriptable.currentAmmo + weaponScriptable.totalAmmo;
-                weaponScriptable.totalAmmo -= weaponScriptable.totalAmmo;
-            }
-        }
-
-        _weaponManager.reloading = false;
-        _totalAmmoCount.text = weaponScriptable.totalAmmo.ToString();
-        UpdateAmmo();
-    }
-
-    private void cameraScope()
-    {
-        if (Input.GetMouseButtonDown(1) && !_weaponManager.reloading /*&& !_weaponManager.scope*/ && weaponScriptable.type == itemType.ShootingWeapon)
-        {
-            _fireArmAnimator.SetBool("Scope", true);
-            _animator.SetBool("Scope", true);
-            _weaponManager.scope = true;
-            _crossHair.SetActive(false);
-        }
-        else if (Input.GetMouseButtonUp(1) && _weaponManager.scope)
-        {
-            _fireArmAnimator.SetBool("Scope", false);
-            _animator.SetBool("Scope", false);
-            _weaponManager.scope = false;
-            _crossHair.SetActive(true);
-        }
-    }
-    private void SettingValues()
-    {
-        _maxAmmo = weaponScriptable.maxAmmo;    
-        _fireRange = weaponScriptable.fireRange; 
-        _fireRate = weaponScriptable.fireTime;
-        _damage = weaponScriptable.damage;
-    }
-
-    public void UpdateAmmo()
-    {
-        _ammoCount.text = weaponScriptable.currentAmmo.ToString();
-    }
     private void MeleeWeaponFire()
     {
         _fireArmAnimator.SetTrigger("Shoot");
@@ -155,12 +79,12 @@ public class weaponScript : MonoBehaviour
         _ray.origin = _raycastTargetOrigin.position;
         _ray.direction = _raycastTargetOrigin.forward;
         _fireSound.Play();
-        if (Physics.Raycast(_ray, out _hit, _fireRange))
+        if (Physics.Raycast(_ray, out _hit, weaponScriptable.fireRange))
         {
             switch (_hit.collider.gameObject.tag)
             {
                 case "Enemy":
-                    _hit.collider.gameObject.GetComponent<EnemyScript>().bulletHit(_damage);
+                    _hit.collider.gameObject.GetComponent<EnemyScript>().bulletHit(weaponScriptable.damage);
                     ParticleEffectEmission(_fleshImpact, _hit);
                     break;
                 case "Player":
@@ -191,12 +115,12 @@ public class weaponScript : MonoBehaviour
         _fireSound.Play();
         _ray.origin = _raycastTargetOrigin.position;
         _ray.direction = _raycastTargetOrigin.forward;
-        if (Physics.Raycast(_ray, out _hit, _fireRange))
+        if (Physics.Raycast(_ray, out _hit, weaponScriptable.fireRange))
         {
             switch (_hit.collider.gameObject.tag)
             {
                 case "Enemy":
-                    _hit.collider.gameObject.GetComponent<EnemyScript>().bulletHit(_damage);
+                    _hit.collider.gameObject.GetComponent<EnemyScript>().bulletHit(weaponScriptable.damage);
                     ParticleEffectEmission(_fleshImpact, _hit);
                     break;
                 case "EnemyBody":
@@ -220,6 +144,74 @@ public class weaponScript : MonoBehaviour
         x.transform.forward = y.normal;
         x.Emit(1);
     }
+    #endregion
+
+    #region Reload
+    private void reload()
+    {
+        _weaponManager.reloading = true;
+        _weaponManager.scope = false;
+
+        _crossHair.SetActive(true);
+        _fireArmAnimator.SetBool("Scope", false);
+        _animator.SetBool("Scope", false);
+        _animator.ResetTrigger("Shoot 0");
+        _animator.ResetTrigger("Shoot 1");
+        _fireArmAnimator.SetTrigger("Reload");
+        _fireArmAnimator.ResetTrigger("Shoot");
+
+        Invoke("stopReload", weaponScriptable.reloadTime);
+    }
+
+    private void stopReload()
+    {
+        if(weaponScriptable.totalAmmo > 0)
+        {
+            int temp;
+            temp = weaponScriptable.maxAmmo - weaponScriptable.currentAmmo;
+            if (temp <= weaponScriptable.totalAmmo)
+            {
+                weaponScriptable.currentAmmo = weaponScriptable.currentAmmo + temp;
+                weaponScriptable.totalAmmo -= temp;
+            }
+            else
+            {
+                weaponScriptable.currentAmmo = weaponScriptable.currentAmmo + weaponScriptable.totalAmmo;
+                weaponScriptable.totalAmmo -= weaponScriptable.totalAmmo;
+            }
+        }
+
+        _weaponManager.reloading = false;
+        _totalAmmoCount.text = weaponScriptable.totalAmmo.ToString();
+        UpdateAmmo();
+    }
+    #endregion
+
+    #region Scope
+    private void cameraScope()
+    {
+        if (Input.GetMouseButtonDown(1) && !_weaponManager.reloading /*&& !_weaponManager.scope*/ && weaponScriptable.type == itemType.ShootingWeapon)
+        {
+            _fireArmAnimator.SetBool("Scope", true);
+            _animator.SetBool("Scope", true);
+            _weaponManager.scope = true;
+            _crossHair.SetActive(false);
+        }
+        else if (Input.GetMouseButtonUp(1) && _weaponManager.scope)
+        {
+            _fireArmAnimator.SetBool("Scope", false);
+            _animator.SetBool("Scope", false);
+            _weaponManager.scope = false;
+            _crossHair.SetActive(true);
+        }
+    }
+    #endregion
+
+    #region UIUpdates
+    public void UpdateAmmo()
+    {
+        _ammoCount.text = weaponScriptable.currentAmmo.ToString();
+    }
     public void UpdateUI()
     {
         switch (weaponScriptable.type)
@@ -234,4 +226,5 @@ public class weaponScript : MonoBehaviour
                 break;
         }
     }
+    #endregion
 }

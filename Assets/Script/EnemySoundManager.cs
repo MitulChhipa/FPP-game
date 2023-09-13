@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 
 public class EnemySoundManager : MonoBehaviour
 {
+
     [SerializeField] private AudioSource _idleSound;
     [SerializeField] private AudioSource _activeSound;
     [SerializeField] private AudioSource _attackSound;
+
 
     public void PlayAttackSound()
     {

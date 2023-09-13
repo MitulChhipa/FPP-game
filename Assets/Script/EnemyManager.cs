@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyManager : MonoBehaviour
 {
+    #region VaribaleDeclaraion
     [SerializeField] private GameObject _enemy;
     [SerializeField] private GameObject _enemy2;
     [SerializeField] private Transform _enemyParent;
@@ -12,23 +13,26 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private Transform _samples;
     [SerializeField] private int _maxEnemy;
     public Transform[] spawnPoints;
-    int count = 0;
+    private int _count = 0;
+    #endregion
 
+    #region Mono
     private void Start()
     {
         InvokeRepeating("instantiateEnemy", 0, 1);
     }
+    #endregion
 
-
+    #region EnemiesSpawn
     private void instantiateEnemy()
     {
-        if (count == _maxEnemy)
+        if (_count == _maxEnemy)
         {
             return;
         }
         GameObject y;
-        count++;
-        if (count % 2 == 0)
+        _count++;
+        if (_count % 2 == 0)
         {
             y = _enemy;
         }
@@ -49,4 +53,5 @@ public class EnemyManager : MonoBehaviour
     {
         BroadcastMessage("ResetAndRespawn");
     }
+    #endregion
 }

@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 
 public class DataManager : MonoBehaviour
 {
+
     public PlayerHealth hp;
     public Transform player;
     public PlayerInitialInfo initialInfo;
@@ -17,7 +18,9 @@ public class DataManager : MonoBehaviour
     public Inventory Inventory;
     [SerializeField] private CollectiblesScript _collectibles;
 
-
+    #region DataSaveAndLoadFucntions
+    
+    //Saving current game data
     public void SaveData()
     {
         DataHandle dataHandle = new DataHandle();
@@ -45,6 +48,7 @@ public class DataManager : MonoBehaviour
         File.WriteAllText(Application.persistentDataPath + "/Inventory.json", invenotoryAsJson);
     }
 
+    //Setting Saved Game Data
     public void LoadData()
     {
         playerMovementCC.enabled = false;
@@ -67,16 +71,9 @@ public class DataManager : MonoBehaviour
         Invoke("ResumePlayer", 0.5f);
         inventoryController.LoadSavedGameInventory();
         _collectibles.ResetCollectibles();
-
-
-        //string invenotoryAsJson = File.ReadAllText(Application.persistentDataPath + "/Inventory.json");
-        //new1 = JsonConvert.DeserializeObject<Inventory>(invenotoryAsJson, new JsonSerializerSettings
-        //{
-        //    NullValueHandling = NullValueHandling.Ignore
-        //});
-
     }
     
+    //Setting New game data
     public void StartNewGame()
     {
         playerMovementCC.enabled = false;
@@ -98,8 +95,10 @@ public class DataManager : MonoBehaviour
         _collectibles.ResetCollectibles();
     }
 
+    //Enabling player
     private void ResumePlayer()
     {
         playerMovementCC.enabled = true;
     }
+    #endregion
 }

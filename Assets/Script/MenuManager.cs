@@ -15,7 +15,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject _winPanel;
     [SerializeField] private GameObject[] _other;
     [SerializeField] private playerMovementCC _playerMovementCC;
-    [SerializeField] private EnemyManager enemyManager;
+    //[SerializeField] private EnemyManager enemyManager;
     [SerializeField] private inventoryController inventoryController;
     [SerializeField] private AudioListener _audioListener1;
     [SerializeField] private AudioListener _audioListener2;
@@ -23,11 +23,11 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Image _audioImage2;
     private bool _audioEnable = true;
 
-
     public bool canActiveMenu;
     
     private bool _paused = false;
 
+    #region MonoFuntion
     private void Start()
     {
         _menuPanel.SetActive(false);
@@ -49,6 +49,9 @@ public class MenuManager : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #region UIFunctions
     public void Pause()
     {
         inventoryController.CloseInventory();
@@ -81,7 +84,6 @@ public class MenuManager : MonoBehaviour
 
     public void ActiveMainMenu()
     {
-        enemyManager.ResetAllEnemies();
         _weaponManager.enabled = true;
         Time.timeScale = 1f;
         _mainMenu.SetActive(true);
@@ -147,4 +149,5 @@ public class MenuManager : MonoBehaviour
             _audioImage2.color = Color.white;
         }
     }
+    #endregion
 }

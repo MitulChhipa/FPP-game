@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class WeaponManager : MonoBehaviour
 {
+
     [SerializeField] private GameObject[] _weapon;
     [SerializeField] private Image _weaponImage;
     public bool scope;
@@ -10,6 +11,7 @@ public class WeaponManager : MonoBehaviour
     private int _currentWeaponCount;
 
 
+    #region Mono
     private void Start()
     {
         deactivationAllWeapons();
@@ -34,6 +36,9 @@ public class WeaponManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
+
+    #region WeaponFuntions
     void ChangeWeapon(int _value)
     {
         _weapon[_currentWeaponCount].SetActive(false);
@@ -68,4 +73,5 @@ public class WeaponManager : MonoBehaviour
     {
         ActivateCurrentWeapon(_currentWeaponCount);
     }
+    #endregion
 }
