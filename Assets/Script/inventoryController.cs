@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class inventoryController : MonoBehaviour
 {
@@ -21,6 +22,15 @@ public class inventoryController : MonoBehaviour
     private bool _isOpened;
     private Ray _ray;
     private RaycastHit _hit;
+
+    public static inventoryController instance;
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
 
     #region Mono
     private void Start()
@@ -56,9 +66,8 @@ public class inventoryController : MonoBehaviour
             {
                 case "Item":
                     var item = _hit.collider.gameObject.GetComponent<itemScript>().item;
-                    _currentInventory.addItem(item, 1);
+                    AddItem(item);
                     _hit.collider.gameObject.SetActive(false);
-                    _itemPick.Play();
                     break;
                 case "Computer":
                     researchScript _researchScript = _hit.collider.gameObject.GetComponent<researchScript>();
@@ -84,7 +93,7 @@ public class inventoryController : MonoBehaviour
             UiScript._description.text = _currentInventory.inventoryContainer[i].item.description;
             UiScript._icon.sprite = _currentInventory.inventoryContainer[i].item.image;
             UiScript.id = i;
-            UiScript.inventoryController = this.GetComponent<inventoryController>();
+            //UiScript.inventoryController = this.GetComponent<inventoryController>();
         }
     }
 
@@ -109,6 +118,12 @@ public class inventoryController : MonoBehaviour
     #endregion
 
     #region ItemFuntions
+    public void AddItem(Items item)
+    {
+        _currentInventory.addItem(item, 1);
+        _itemPick.Play();
+    }
+
     public void ApplyItemEffect(int range)
     {
         if (range >= _currentInventory.inventoryContainer.Count || _currentInventory.inventoryContainer[range].item.type != itemType.Consumable)

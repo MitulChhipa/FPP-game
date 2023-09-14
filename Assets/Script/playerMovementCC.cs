@@ -13,7 +13,6 @@ public class playerMovementCC : MonoBehaviour
     [SerializeField] private AudioSource _jumpAudio;
     [SerializeField] private AudioSource _dropAudio;
 
-
     private float _noFoodWaterHealthChange = -5f;
     private float _y, _playerSpeed;
     private Vector3 _localDirection = new Vector3();
@@ -64,6 +63,12 @@ public class playerMovementCC : MonoBehaviour
         else
         {
             _isSwimming = false;
+        }
+        if (hit.collider.CompareTag("Item"))
+        {
+            var item = hit.collider.gameObject.GetComponent<itemScript>().item;
+            inventoryController.instance.AddItem(item);
+            hit.collider.gameObject.SetActive(false);
         }
     }
     #endregion

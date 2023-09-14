@@ -14,7 +14,6 @@ public class DataManager : MonoBehaviour
     public researchScript research;
     public WeaponScriptable pistol;
     public WeaponScriptable m4;
-    public inventoryController inventoryController;
     public Inventory Inventory;
     [SerializeField] private CollectiblesScript _collectibles;
 
@@ -39,7 +38,7 @@ public class DataManager : MonoBehaviour
         string json = JsonUtility.ToJson(dataHandle,true);
         File.WriteAllText(Application.persistentDataPath + "/DataFile.json", json);
 
-        inventoryController.SaveCurrentInventory();
+        inventoryController.instance.SaveCurrentInventory();
 
         string invenotoryAsJson = JsonConvert.SerializeObject(Inventory, Formatting.Indented, new JsonSerializerSettings
         {
@@ -69,7 +68,7 @@ public class DataManager : MonoBehaviour
         hp.UpdateAllHpUi();
         weaponManager.UpdateCurrentWeaponUI();
         Invoke("ResumePlayer", 0.5f);
-        inventoryController.LoadSavedGameInventory();
+        inventoryController.instance.LoadSavedGameInventory();
         _collectibles.ResetCollectibles();
     }
     
@@ -91,7 +90,7 @@ public class DataManager : MonoBehaviour
         hp.UpdateAllHpUi();
         weaponManager.UpdateCurrentWeaponUI();
         Invoke("ResumePlayer", 0.5f);
-        inventoryController.LoadNewGameInventory();
+        inventoryController.instance.LoadNewGameInventory();
         _collectibles.ResetCollectibles();
     }
 

@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   image: {fileID: 21300000, guid: 4bc273f6266c07c48a6a05d7fdd24568, type: 3}
-  description: Increase both Food and Water level by 40%
+  description: Increase both Food and Water level by 20%
   itemName: Energy Drink
   restoreHealth: 0
-  restoreFood: 40
+  restoreFood: 20
   restoreStamina: 0
-  restoreWater: 40
+  restoreWater: 20
   increaseKnowledgeValue: 0

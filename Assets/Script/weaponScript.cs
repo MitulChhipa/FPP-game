@@ -50,7 +50,7 @@ public class weaponScript : MonoBehaviour
             }
         }
         
-        if (Input.GetKeyDown(KeyCode.R) && !_weaponManager.reloading && (weaponScriptable.currentAmmo <weaponScriptable.totalAmmo) && (weaponScriptable.totalAmmo != 0))
+        if (Input.GetKeyDown(KeyCode.R) && !_weaponManager.reloading && (weaponScriptable.currentAmmo <weaponScriptable.maxAmmo) && (weaponScriptable.totalAmmo != 0))
         {
             reload();
         }

@@ -51,5 +51,4 @@ public class ragdollController : MonoBehaviour
         _enemyScript.agent.isStopped = false;
     }
     #endregion
-
 }

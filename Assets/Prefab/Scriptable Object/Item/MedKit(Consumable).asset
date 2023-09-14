@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   image: {fileID: 21300000, guid: 019362ff02df3854cbef2a084f127efd, type: 3}
-  description: Increase Health by 100%
+  description: Increase Health by 80%
   itemName: Med Kit
-  restoreHealth: 100
+  restoreHealth: 80
   restoreFood: 0
   restoreStamina: 0
   restoreWater: 0
+  increaseKnowledgeValue: 0

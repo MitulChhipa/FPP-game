@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   image: {fileID: 21300000, guid: f27fd47b71026c149afe5198ede5abd9, type: 3}
-  description: Increase health by 40%
+  description: Increase health by 30%
   itemName: Band Aid
-  restoreHealth: 40
+  restoreHealth: 30
   restoreFood: 0
   restoreStamina: 0
   restoreWater: 0
+  increaseKnowledgeValue: 0

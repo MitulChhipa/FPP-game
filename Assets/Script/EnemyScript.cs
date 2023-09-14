@@ -157,22 +157,12 @@ public class EnemyScript : MonoBehaviour
         agent.SetDestination(_enemyManager.RandomPosition());
         agent.isStopped = false;
         _walkTimer = 0;
+        _bloodSample.SetActive(false);
     }
 
 
     private void DropItem()
     {
-        //int x = Random.Range(0,10);
-        //switch (x)
-        //{
-        //    case 0:
-        //        _bloodSample.transform.position = transform.position;
-        //        _bloodSample.SetActive(true);
-        //        break;
-        //    default: 
-        //        break;
-        //}
-
         _bloodSample.transform.position = transform.position;
         _bloodSample.SetActive(true);
     }

@@ -12,6 +12,6 @@ public class SettingComponent : MonoBehaviour
 
     public void UseThisItem()
     {
-        inventoryController.ApplyItemEffect(id);
+        inventoryController.instance.ApplyItemEffect(id);
     }
 }

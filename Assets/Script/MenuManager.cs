@@ -15,8 +15,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject _winPanel;
     [SerializeField] private GameObject[] _other;
     [SerializeField] private playerMovementCC _playerMovementCC;
-    //[SerializeField] private EnemyManager enemyManager;
-    [SerializeField] private inventoryController inventoryController;
     [SerializeField] private AudioListener _audioListener1;
     [SerializeField] private AudioListener _audioListener2;
     [SerializeField] private Image _audioImage;
@@ -54,7 +52,7 @@ public class MenuManager : MonoBehaviour
     #region UIFunctions
     public void Pause()
     {
-        inventoryController.CloseInventory();
+        inventoryController.instance.CloseInventory();
         Time.timeScale = 0f;
         _cameraScript.enabled = false;
         _paused = true;
@@ -110,7 +108,7 @@ public class MenuManager : MonoBehaviour
 
     public void GameOver()
     {
-        inventoryController.CloseInventory();
+        inventoryController.instance.CloseInventory();
         canActiveMenu = false;
         _playerMovementCC.enabled = false;
         _gameOverPanel.SetActive(true);
@@ -121,7 +119,7 @@ public class MenuManager : MonoBehaviour
     }
     public void Win()
     {
-        inventoryController.CloseInventory();
+        inventoryController.instance.CloseInventory();
         canActiveMenu = false;
         _playerMovementCC.enabled = false;
         _winPanel.SetActive(true);
