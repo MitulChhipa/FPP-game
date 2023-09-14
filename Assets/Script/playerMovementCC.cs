@@ -152,7 +152,7 @@ public class playerMovementCC : MonoBehaviour
                 _dropAudio.Play();
                 _ph.changeHealth(_gravity.y);
             }
-            _gravity.y = -1f;
+            _gravity.y = -9.8f;
             if (_jump)
             {
                 _gravity.y = _jumpForce;
@@ -186,7 +186,7 @@ public class playerMovementCC : MonoBehaviour
         _ph.changeFood(-0.5f);
 
         //Stamina functionality
-        if (_isRunning && _ph.stamina > 0)
+        if (_isRunning && _isWalking)
         {
             _ph.changeStamina(-10);
         }

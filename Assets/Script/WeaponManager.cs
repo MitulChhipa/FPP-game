@@ -3,12 +3,12 @@ using UnityEngine.UI;
 
 public class WeaponManager : MonoBehaviour
 {
-
     [SerializeField] private GameObject[] _weapon;
     [SerializeField] private Image _weaponImage;
     public bool scope;
     public bool reloading;
     private int _currentWeaponCount;
+
 
 
     #region Mono
