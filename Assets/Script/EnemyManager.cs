@@ -8,6 +8,7 @@ public class EnemyManager : MonoBehaviour
     #region VaribaleDeclaraion
     [SerializeField] private GameObject _enemy;
     [SerializeField] private GameObject _enemy2;
+    [SerializeField] private GameObject[] _enemyPool;
     [SerializeField] private Transform _enemyParent;
     [SerializeField] private Transform _player;
     [SerializeField] private Transform _samples;
@@ -19,6 +20,7 @@ public class EnemyManager : MonoBehaviour
     #region Mono
     private void Start()
     {
+        _enemyPool = new GameObject[_maxEnemy];
         InvokeRepeating("instantiateEnemy", 0, 1);
     }
     #endregion
@@ -26,12 +28,11 @@ public class EnemyManager : MonoBehaviour
     #region EnemiesSpawn
     private void instantiateEnemy()
     {
-        if (_count == _maxEnemy)
+        if (_count == _maxEnemy-1)
         {
             return;
         }
         GameObject y;
-        _count++;
         if (_count % 2 == 0)
         {
             y = _enemy;
@@ -41,8 +42,10 @@ public class EnemyManager : MonoBehaviour
             y = _enemy2;
         }
 
-        GameObject x = Instantiate(y, spawnPoints[Random.Range(0, spawnPoints.Length - 1)].position, Quaternion.identity, _enemyParent);
-        x.GetComponent<EnemyScript>().sampleTransform = _samples;
+        _enemyPool[_count] = Instantiate(y, spawnPoints[Random.Range(0, spawnPoints.Length - 1)].position, Quaternion.identity, _enemyParent);
+        _enemyPool[_count].GetComponent<EnemyScript>().sampleTransform = _samples;
+
+        _count++;
     }
     public Vector3 RandomPosition()
     {
@@ -51,6 +54,14 @@ public class EnemyManager : MonoBehaviour
 
     public void ResetAllEnemies()
     {
+        for(int i = 0; i < _maxEnemy; i++)
+        {
+            if(_enemyPool[i] == null)
+            {
+                continue;
+            }
+            _enemyPool[i].SetActive(true);
+        }
         BroadcastMessage("ResetAndRespawn");
     }
     #endregion
