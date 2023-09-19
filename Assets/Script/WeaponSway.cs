@@ -15,6 +15,7 @@ public class WeaponSway : MonoBehaviour
 
     private void Update()
     {
+        //swaying the weapon container in y axis using mouse input and in x axis using mouse input and player velocity
         _rotationVector.y = Input.GetAxis("Mouse X") * _swayMultiplier;
         _rotationVector.x = -Input.GetAxis("Mouse Y") * _swayMultiplier + _characterController.velocity.y*2f;
 

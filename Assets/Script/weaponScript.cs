@@ -35,12 +35,14 @@ public class weaponScript : MonoBehaviour
 
     private void Update()
     {
-
+        //Single fire
         if (Input.GetMouseButtonDown(0) && !_weaponManager.reloading)
         {
             startFire();
         }
         _isFiring = Input.GetMouseButton(0);
+
+        //Continous fire according to the firetime of the weapon
         if (_isFiring && !_weaponManager.reloading)
         {
             _firingTime = _firingTime + Time.deltaTime;
@@ -50,6 +52,7 @@ public class weaponScript : MonoBehaviour
             }
         }
         
+        //Reloading using input if ammo is less than maximum magzine ammo
         if (Input.GetKeyDown(KeyCode.R) && !_weaponManager.reloading && (weaponScriptable.currentAmmo <weaponScriptable.maxAmmo) && (weaponScriptable.totalAmmo != 0))
         {
             reload();
@@ -59,6 +62,8 @@ public class weaponScript : MonoBehaviour
     #endregion
 
     #region Fire
+
+    
     private void startFire()
     {
         _firingTime = 0;
@@ -72,10 +77,13 @@ public class weaponScript : MonoBehaviour
                 break;
         }
     }
+    //Fire for melee Weapons
     private void MeleeWeaponFire()
     {
+        //weapon fire animation
         _fireArmAnimator.SetTrigger("Shoot");
 
+        //Raycasting the fire direction and checking the target
         _ray.origin = _raycastTargetOrigin.position;
         _ray.direction = _raycastTargetOrigin.forward;
         _fireSound.Play();
@@ -92,6 +100,7 @@ public class weaponScript : MonoBehaviour
             }
         }
     }
+    //Fire for shooting Weapons
     private void ShootingWeaponFire()
     {
         if(weaponScriptable.totalAmmo == 0 && weaponScriptable.currentAmmo == 0)
@@ -106,13 +115,20 @@ public class weaponScript : MonoBehaviour
             return;
         }
 
+        //Animation for weapon
         _animator.SetTrigger("Shoot 0");
         _fireArmAnimator.SetTrigger("Shoot");
+       
+        //Changing ammo
         weaponScriptable.currentAmmo = weaponScriptable.currentAmmo - 1;
         UpdateAmmo();
+        
+        //ParticleEffect and sound play
         _muzzleFlash.transform.Rotate(0f, 0f, (Random.Range(0f, 180f)));
         _muzzleFlash.Play();
         _fireSound.Play();
+
+        //Raycasting the fire direction and checking the target
         _ray.origin = _raycastTargetOrigin.position;
         _ray.direction = _raycastTargetOrigin.forward;
         if (Physics.Raycast(_ray, out _hit, weaponScriptable.fireRange))
@@ -147,6 +163,7 @@ public class weaponScript : MonoBehaviour
     #endregion
 
     #region Reload
+    //Reloading the ammo accoring to reload time
     private void reload()
     {
         _weaponManager.reloading = true;
@@ -163,6 +180,7 @@ public class weaponScript : MonoBehaviour
         Invoke("stopReload", weaponScriptable.reloadTime);
     }
 
+    //Reloading ammo logic
     private void stopReload()
     {
         if(weaponScriptable.totalAmmo > 0)
@@ -188,6 +206,7 @@ public class weaponScript : MonoBehaviour
     #endregion
 
     #region Scope
+    //Camera scope which is effective only in shooting weapons
     private void cameraScope()
     {
         if (Input.GetMouseButtonDown(1) && !_weaponManager.reloading /*&& !_weaponManager.scope*/ && weaponScriptable.type == itemType.ShootingWeapon)
@@ -208,10 +227,12 @@ public class weaponScript : MonoBehaviour
     #endregion
 
     #region UIUpdates
+    //Updating UI of the current mag ammo
     public void UpdateAmmo()
     {
         _ammoCount.text = weaponScriptable.currentAmmo.ToString();
     }
+    //Updating all UI of the weapon ammo
     public void UpdateUI()
     {
         switch (weaponScriptable.type)

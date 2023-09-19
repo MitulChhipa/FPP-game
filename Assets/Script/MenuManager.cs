@@ -6,17 +6,22 @@ using UnityEngine.UI;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private cameraScript _cameraScript;
-    [SerializeField] private GameObject _menuPanel;
-    [SerializeField] private AudioSource[] _audioSources;
+    
     [SerializeField] private weaponScript[] _weaponScripts;
     [SerializeField] private WeaponManager _weaponManager;
+    
+    [SerializeField] private GameObject _menuPanel;
     [SerializeField] private GameObject _mainMenu;
     [SerializeField] private GameObject _gameOverPanel;
     [SerializeField] private GameObject _winPanel;
     [SerializeField] private GameObject[] _other;
+    
     [SerializeField] private playerMovementCC _playerMovementCC;
+    
+    [SerializeField] private AudioSource[] _audioSources;
     [SerializeField] private AudioListener _audioListener1;
     [SerializeField] private AudioListener _audioListener2;
+    
     [SerializeField] private Image _audioImage;
     [SerializeField] private Image _audioImage2;
     private bool _audioEnable = true;

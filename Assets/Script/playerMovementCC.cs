@@ -13,19 +13,19 @@ public class playerMovementCC : MonoBehaviour
     [SerializeField] private AudioSource _jumpAudio;
     [SerializeField] private AudioSource _dropAudio;
 
-    private float _noFoodWaterHealthChange = -5f;
     private float _y, _playerSpeed;
+    private float _effectiveVelocityUnit;
+    private float _timer;
+    private bool _isWalking, _shift, _jump, _isRunning, _actionInput, _crouch;
+    private bool _isSwimming;
     private Vector3 _localDirection = new Vector3();
     private Vector3 _inputDirection = new Vector3();
     private Vector3 _gravity = new Vector3(0,0,0);
-    private bool _isWalking, _shift, _jump, _onGround, _isRunning, _actionInput, _crouch;
-    private float _timer;
-    private bool _isSwimming;
+    private Vector2 _velocityXZ;
 
     #region MonoFunctions
     private void Start()
     {
-        //_state = playerState.idle;
         _controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -36,7 +36,6 @@ public class playerMovementCC : MonoBehaviour
         movement();
         jump();
         crouch();
-        
         _timer = _timer + Time.deltaTime;
         if(_timer >=1)
         {
@@ -115,23 +114,29 @@ public class playerMovementCC : MonoBehaviour
         _localDirection = transform.TransformDirection(_inputDirection);
         _localDirection.Normalize();
         _controller.Move((_localDirection * _playerSpeed + _gravity) * Time.deltaTime);
-        
-        if(_localDirection.sqrMagnitude > 0 && _controller.isGrounded && !_isSwimming)
+        _velocityXZ.x = _controller.velocity.x;
+        _velocityXZ.y = _controller.velocity.z;
+        _effectiveVelocityUnit = _velocityXZ.magnitude / _sprintSpeed;
+
+        _movementAnimator.SetFloat("Blend", _effectiveVelocityUnit);
+        if (_controller.isGrounded && !_isSwimming)
         {
-            _movementAnimator.SetBool("Movement", true);
-            _movementAnimator.SetFloat("Blend", _playerSpeed / _sprintSpeed);
-            if (_playerSpeed/_sprintSpeed > 0.9f)
+            if (_effectiveVelocityUnit > 0.1f && _effectiveVelocityUnit < 0.7f)
+            {
+                WalkSound();
+            }
+            else if (_effectiveVelocityUnit > 0.9f)
             {
                 RunSound();
             }
             else
             {
-                WalkSound();
+                _walkAudio.Stop();
+                _runAudio.Stop();
             }
         }
         else
         {
-            _movementAnimator.SetBool("Movement", false);
             _walkAudio.Stop();
             _runAudio.Stop();
         }
@@ -164,7 +169,7 @@ public class playerMovementCC : MonoBehaviour
             _gravity.y = _gravity.y + (_gravitationalAcc * Time.deltaTime);
         }
     }
-
+    //
     private void crouch()
     {
         if(Input.GetKeyDown(KeyCode.C))

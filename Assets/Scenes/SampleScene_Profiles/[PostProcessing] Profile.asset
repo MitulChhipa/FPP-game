@@ -61,26 +61,26 @@ MonoBehaviour:
     value: {fileID: 0}
     defaultState: 1
   tonemapper:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 3
   toneCurveToeStrength:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 0.183
   toneCurveToeLength:
-    overrideState: 0
-    value: 0.5
+    overrideState: 1
+    value: 0.557
   toneCurveShoulderStrength:
     overrideState: 0
     value: 0
   toneCurveShoulderLength:
     overrideState: 0
-    value: 0.5
+    value: 0.29
   toneCurveShoulderAngle:
     overrideState: 0
     value: 0
   toneCurveGamma:
     overrideState: 0
-    value: 1
+    value: 1.13
   ldrLut:
     overrideState: 0
     value: {fileID: 0}
@@ -95,11 +95,11 @@ MonoBehaviour:
     overrideState: 0
     value: 29
   colorFilter:
-    overrideState: 0
-    value: {r: 1, g: 1, b: 1, a: 1}
+    overrideState: 1
+    value: {r: 1, g: 0.9202386, b: 0.8349056, a: 1}
   hueShift:
     overrideState: 0
-    value: 18
+    value: 0
   saturation:
     overrideState: 0
     value: -5
@@ -108,7 +108,7 @@ MonoBehaviour:
     value: 0
   postExposure:
     overrideState: 1
-    value: 0
+    value: 0.5
   contrast:
     overrideState: 1
     value: 14
@@ -144,10 +144,10 @@ MonoBehaviour:
     value: {x: 1, y: 1, z: 1, w: 0}
   gamma:
     overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 0.99188346, y: 1, z: 0.99640614, w: 0}
   gain:
     overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 0.9846963, y: 1, z: 0.9837676, w: 0}
   masterCurve:
     overrideState: 0
     value:
@@ -1348,34 +1348,6 @@ MonoBehaviour:
       - 0.5
       - 0.5
       - 0.5
---- !u!114 &-724022196860968662
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 556797029e73b2347956b6579e77e05b, type: 3}
-  m_Name: DepthOfField
-  m_EditorClassIdentifier: 
-  active: 0
-  enabled:
-    overrideState: 1
-    value: 1
-  focusDistance:
-    overrideState: 1
-    value: 10
-  aperture:
-    overrideState: 1
-    value: 23.9
-  focalLength:
-    overrideState: 1
-    value: 43
-  kernelSize:
-    overrideState: 0
-    value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1392,7 +1364,6 @@ MonoBehaviour:
   - {fileID: -8883078483686835324}
   - {fileID: -8961822859040438253}
   - {fileID: 6729003764171677346}
-  - {fileID: -724022196860968662}
 --- !u!114 &6729003764171677346
 MonoBehaviour:
   m_ObjectHideFlags: 3
