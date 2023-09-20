@@ -28,7 +28,7 @@ public class EnemyManager : MonoBehaviour
     #region EnemiesSpawn
     private void instantiateEnemy()
     {
-        if (_count == _maxEnemy-1)
+        if (_count == _maxEnemy)
         {
             return;
         }
