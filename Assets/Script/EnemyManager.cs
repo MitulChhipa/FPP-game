@@ -21,7 +21,7 @@ public class EnemyManager : MonoBehaviour
     private void Start()
     {
         _enemyPool = new GameObject[_maxEnemy];
-        InvokeRepeating("instantiateEnemy", 0, 1);
+        InvokeRepeating("instantiateEnemy", 0, 0.01f);
     }
     #endregion
 
@@ -62,6 +62,7 @@ public class EnemyManager : MonoBehaviour
             }
             _enemyPool[i].SetActive(true);
         }
+        BroadcastMessage("CancelInvoke");
         BroadcastMessage("ResetAndRespawn");
     }
     #endregion
