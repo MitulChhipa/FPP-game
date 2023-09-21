@@ -85,6 +85,8 @@ public class inventoryController : MonoBehaviour
         _weaponManager.deactivationAllWeapons();
         _weaponManager.enabled = false;
 
+        int CollectiblesCount = 0;
+
         for (int i = 0; i < _currentInventory.inventoryContainer.Count;i++)
         {
             var Ui = Instantiate(_itemContainer, _inventoryContainer.transform);
@@ -93,7 +95,6 @@ public class inventoryController : MonoBehaviour
             UiScript._description.text = _currentInventory.inventoryContainer[i].item.description;
             UiScript._icon.sprite = _currentInventory.inventoryContainer[i].item.image;
             UiScript.id = i;
-            //UiScript.inventoryController = this.GetComponent<inventoryController>();
         }
     }
 

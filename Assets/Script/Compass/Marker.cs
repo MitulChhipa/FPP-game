@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Marker : MonoBehaviour
+[System.Serializable]
+public class Marker
 {
-    public Sprite icon;
+    public Color iconColor;
     public Image image;
     public Transform transform;
     public Vector2 position;

@@ -9,15 +9,24 @@ public class Compass : MonoBehaviour
     [SerializeField] private List<Marker> _Markers;
     [SerializeField] private RawImage _compassImage;
     [SerializeField] private Transform _player;
-    [SerializeField] private Marker _newMarker;
+    [SerializeField]private float offset;
 
     private float compassUnit;
-    [SerializeField]private float offset;
+
+    public static Compass Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
         compassUnit = _compassImage.rectTransform.rect.width / 360f;
-        AddMarker(_newMarker);
+        foreach (Marker marker in _Markers)
+        {
+            AddMarker(marker);
+        }
     }
 
     private void Update()
@@ -34,11 +43,12 @@ public class Compass : MonoBehaviour
     {
         GameObject newMarker = Instantiate(_markerPrefab, _compassImage.transform);
         _markerElement.image = newMarker.gameObject.GetComponent<Image>();
-        _markerElement.image.sprite = _markerElement.icon;
+        _markerElement.image.color = _markerElement.iconColor;
         _markerElement.position.x = _markerElement.transform.position.x;
         _markerElement.position.y = _markerElement.transform.position.z;
-        _Markers.Add(_markerElement);
     }
+
+
 
     private Vector2 GetPosOnCompass(Marker _markerElement)
     {
@@ -47,6 +57,6 @@ public class Compass : MonoBehaviour
 
         float angle = Vector2.SignedAngle(_markerElement.position - playerPos, playerFwd);
 
-        return new Vector2(compassUnit*angle+offset,-45f);
+        return new Vector2(compassUnit*angle+offset, offset);
     }
 }
