@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnemyManager : MonoBehaviour
 {
-    #region VaribaleDeclaraion
     [SerializeField] private GameObject _enemy;
     [SerializeField] private GameObject _enemy2;
     [SerializeField] private GameObject[] _enemyPool;
@@ -15,13 +14,12 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private int _maxEnemy;
     public Transform[] spawnPoints;
     private int _count = 0;
-    #endregion
 
     #region Mono
     private void Start()
     {
         _enemyPool = new GameObject[_maxEnemy];
-        InvokeRepeating("instantiateEnemy", 0, 1);
+        InvokeRepeating("instantiateEnemy", 0, 0.01f);
     }
     #endregion
 
@@ -62,6 +60,7 @@ public class EnemyManager : MonoBehaviour
             }
             _enemyPool[i].SetActive(true);
         }
+        BroadcastMessage("CancelInvoke");
         BroadcastMessage("ResetAndRespawn");
     }
     #endregion
