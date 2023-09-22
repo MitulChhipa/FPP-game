@@ -17,6 +17,7 @@ public class weaponScript : MonoBehaviour
     [SerializeField] private GameObject _crossHair;
     [SerializeField] private WeaponManager _weaponManager;
     [SerializeField] private AudioSource click;
+    [SerializeField] private Animator _crosshairAnim;
     
     public WeaponScriptable weaponScriptable;
 
@@ -94,6 +95,7 @@ public class weaponScript : MonoBehaviour
                 case "Enemy":
                     _hit.collider.gameObject.GetComponent<EnemyScript>().bulletHit(weaponScriptable.damage);
                     ParticleEffectEmission(_fleshImpact, _hit);
+                    _crosshairAnim.SetTrigger("Hit");
                     break;
                 case "Player":
                     break;
@@ -138,11 +140,12 @@ public class weaponScript : MonoBehaviour
                 case "Enemy":
                     _hit.collider.gameObject.GetComponent<EnemyScript>().bulletHit(weaponScriptable.damage);
                     ParticleEffectEmission(_fleshImpact, _hit);
+                    _crosshairAnim.SetTrigger("Hit");
                     break;
                 case "EnemyBody":
                     _hit.collider.gameObject.GetComponent<Rigidbody>().AddForce(_hit.normal * -500f);
                     ParticleEffectEmission(_fleshImpact, _hit);
-
+                    _crosshairAnim.SetTrigger("Hit");
                     break;
                 case "Player":
                     break;

@@ -10,7 +10,7 @@ public class ragdollController : MonoBehaviour
     [SerializeField] private EnemyScript _enemyScript;
 
 
-    private void Start()
+    private void Awake()
     {
         DeactiveRagDoll();
     }

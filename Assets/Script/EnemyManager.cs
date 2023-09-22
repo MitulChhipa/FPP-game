@@ -13,37 +13,34 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private Transform _samples;
     [SerializeField] private int _maxEnemy;
     public Transform[] spawnPoints;
-    private int _count = 0;
 
     #region Mono
     private void Start()
     {
         _enemyPool = new GameObject[_maxEnemy];
-        InvokeRepeating("instantiateEnemy", 0, 0.01f);
+        //InvokeRepeating("instantiateEnemy", 0, 0.01f);
+        instantiateEnemy();
     }
     #endregion
 
     #region EnemiesSpawn
     private void instantiateEnemy()
     {
-        if (_count == _maxEnemy)
-        {
-            return;
-        }
+
         GameObject y;
-        if (_count % 2 == 0)
+        for(int i = 0; i < _enemyPool.Length; i++)
         {
-            y = _enemy;
+            if (i % 2 == 0)
+            {
+                y = _enemy;
+            }
+            else
+            {
+                y = _enemy2;
+            }
+            _enemyPool[i] = Instantiate(y, spawnPoints[Random.Range(0, spawnPoints.Length - 1)].position, Quaternion.identity, _enemyParent);
+            _enemyPool[i].GetComponent<EnemyScript>().sampleTransform = _samples;
         }
-        else
-        {
-            y = _enemy2;
-        }
-
-        _enemyPool[_count] = Instantiate(y, spawnPoints[Random.Range(0, spawnPoints.Length - 1)].position, Quaternion.identity, _enemyParent);
-        _enemyPool[_count].GetComponent<EnemyScript>().sampleTransform = _samples;
-
-        _count++;
     }
     public Vector3 RandomPosition()
     {
